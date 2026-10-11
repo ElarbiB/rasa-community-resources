@@ -37,7 +37,7 @@ native interruption. The two JSON records retain both results.
 
 These controls use scripted dialogue replies and an inspectable text sink.
 The loopback HTTP controls exercise the actual REST client. Assess microphone,
-speech-provider, playback and acoustic interruption behavior with your own
+speech-provider, playback and acoustic interruption behaviour with your own
 retained services and recordings.
 
 The processor keeps accepted requests in order. New speech ownership does not

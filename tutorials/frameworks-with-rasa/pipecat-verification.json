@@ -20,7 +20,7 @@
     "tutorials/frameworks-with-rasa/pipecat-mantle/uv.lock": "89ece71d535da705d7d3d4701eb23830c7a0b64ef483c42fa8191d6621826131",
     "tutorials/frameworks-with-rasa/pipecat/.gitignore": "c11eebe536a0d75b1b82d262cf37f4d9c6693fb4ab18479b7b7d30bdad84fe6d",
     "tutorials/frameworks-with-rasa/pipecat/Makefile": "891a2516167b0010c4b3cf528db1ce3a35fc7e9a71d49e99018a511c7dc9868d",
-    "tutorials/frameworks-with-rasa/pipecat/README.md": "03b8ff8b11266cd3a6ea69cc3c41c2e57473ea764533cf69e4fa0508f375efe0",
+    "tutorials/frameworks-with-rasa/pipecat/README.md": "7bcc98c1b38cb50267fa43c0809d50169b76edfac856f3b61a52951b4eabb1ba",
     "tutorials/frameworks-with-rasa/pipecat/demo_interruption.py": "78f8f2208d88fedfeb5240e81121335492a7d2b7e36bcbc4668a7a4411d9c5ef",
     "tutorials/frameworks-with-rasa/pipecat/pyproject.toml": "9506b3a617552afed176c3fd277382200fadc438dd93113354ce636343911843",
     "tutorials/frameworks-with-rasa/pipecat/rasa_dialogue/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -207,6 +207,18 @@
         "tutorials/frameworks-with-rasa/pipecat/uv.lock": {
           "before": "a23d583c643db7f2126f225b079e33f36ea5587539ae519e4fa8c54586594363",
           "after": "a23d583c643db7f2126f225b079e33f36ea5587539ae519e4fa8c54586594363"
+        }
+      },
+      "new_native_or_provider_runs": 0
+    },
+    {
+      "checked_at": "2026-10-11T20:43:45.164766+00:00",
+      "prior_revision": "05d3d0c34ebd99ff3b91b7e75b2155fcc81a0d54",
+      "change": "British spelling in author-written README prose only; runtime, locks and original execution dates unchanged.",
+      "changed_files": {
+        "tutorials/frameworks-with-rasa/pipecat/README.md": {
+          "before": "03b8ff8b11266cd3a6ea69cc3c41c2e57473ea764533cf69e4fa0508f375efe0",
+          "after": "7bcc98c1b38cb50267fa43c0809d50169b76edfac856f3b61a52951b4eabb1ba"
         }
       },
       "new_native_or_provider_runs": 0
