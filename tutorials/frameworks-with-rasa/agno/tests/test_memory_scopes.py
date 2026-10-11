@@ -13,6 +13,7 @@ class MemoryScopes(unittest.TestCase):
             )
         for item in result["observations"]:
             self.assertFalse(item["previous_question_in_initial_input"])
+            self.assertEqual(item["user_messages_in_initial_input"], 1)
             self.assertTrue(item["native_product_tool_seen"])
             self.assertTrue(item["final_output_present"])
         return result["observations"]

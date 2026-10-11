@@ -94,7 +94,7 @@ def observe_memory_strategy(
         }[strategy]
         model.inputs.clear()
         output = agent.run(
-            "Tell me about the public hand cream.",
+            f"Synthetic conversation {session}: tell me about the public hand cream.",
             session_id=session,
             user_id=selected_owner,
         )
@@ -107,6 +107,9 @@ def observe_memory_strategy(
                 "session": session,
                 "preference_in_initial_input": PREFERENCE in initial_text,
                 "previous_question_in_initial_input": FIRST_QUESTION in initial_text,
+                "user_messages_in_initial_input": sum(
+                    message["role"] == "user" for message in initial
+                ),
                 "native_product_tool_seen": any(
                     "WS-HAND-01" in str(m["content"]) for m in tool_messages
                 ),
