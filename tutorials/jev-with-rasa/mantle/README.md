@@ -1,7 +1,7 @@
 # Jacaranda Bank conversation with a Jev account selector
 
 Start with [the full walkthrough](../README.md). This project keeps Mantle's
-ordinary orchestrator and calls the public Jev worker through a decorated tool.
+ordinary orchestrator and calls a bounded local Laya or optional hosted Jev worker through decorated tools.
 The account choices and transaction rows are fictional. Public demo labels do
 not authenticate a customer.
 
@@ -13,7 +13,7 @@ The initial offline run passed 22 controls; the cold-archive control needs
 licensed training first. Jev responses were scripted through the actual SDK.
 
 Run `make install`, `make demo` and `make test` here. `make worker` serves scripted
-SDK responses; `make worker-live` requires `TYPESAFE_API_KEY` and sends paid Jev
+SDK responses; `make worker-local` uses the separately running pinned Laya model; `make worker-live` requires `TYPESAFE_API_KEY` and sends paid Jev
 requests. `make train` requires an issued Rasa licence and `OPENAI_API_KEY`;
 `make run` serves the REST conversation on loopback port 5030. Keep the selected
 worker running on loopback port 5029. `.env.example` lists the variable names.

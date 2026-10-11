@@ -1,50 +1,71 @@
-# Jev account selection with a Rasa conversation
+# A local decision model behind a Rasa account assistant
 
-This extends the fictional Jacaranda Bank examples with a read-only transaction
-request. The TypeSafe SDK sends a bounded account question to Jev. Python builds
-the eligible choices and checks them again before reading. Mantle asks for missing
-input and explains the returned facts through its ordinary tool interface.
+Use an open-weight Laya model to propose an account, then let Rasa ask the user
+whether to use it. Python checks the confirmed proposal before reading its
+fictional transactions. This deliberately extends the Jacaranda Bank tutorial
+family; no real customer data or bank service is connected.
 
-The existing Mantle orchestrator still chooses when to invoke tools and writes
-the conversation. This application adds Jev inside a tool workflow. It uses the
-public Rasa package and public TypeSafe SDK, with no Rasa engine patch or private
-feature flag. The worker's SDK client is retained across requests and closed on
-shutdown. This single-threaded loopback service is a development example.
+The implementation uses public packages and ordinary Mantle tools. Mantle's
+existing orchestrator still decides when to invoke tools and writes the
+conversation. This project adds a bounded account decision inside a tool
+workflow; it does not patch or replace the Rasa engine.
 
-## Run the offline exercise
+## Start with reproducible offline controls
 
-Use Python 3.12 and uv. From this repository root:
+Use Python 3.12 and uv. From the repository root:
 
 ```sh
 cd tutorials/jev-with-rasa/mantle
-uv sync --locked --prerelease=allow
+uv sync --prerelease=allow --locked
 make demo
 make test
 ```
 
-The demo passes scripted HTTP replies through the actual TypeSafe SDK. It prints
-an unoffered label accepted by the SDK decoder but refused by the application,
-an accepted read, a refused stale choice and a clarification with no read. The
-scripted confidence is deliberately 1.0. The tests also invoke real decorated
-Mantle tools through a loopback worker. The cold-archive test skips until trained.
+The demo passes scripted HTTP replies through the actual TypeSafe SDK. It shows
+that response decoding, offered-choice membership and current eligibility are
+separate checks. These are wire/application controls, not hosted Jev predictions.
+The cold-archive control skips until you run licensed training.
 
-Pins checked on 11 October 2026: Rasa Pro 3.21.0.dev5, typesafe-sdk 0.7.4,
-Jev model `jev-1.13.0`. The locks record dependency distributions and hashes.
-See [TypeSafe's Python SDK](https://docs.typesafe.ai/sdk/python) and
-[model reference](https://docs.typesafe.ai/models).
+The conversation uses a proposal/confirmation path. A proposal reads no
+transactions. A new user reply confirms or cancels it; the model supplies no
+account ID or confirmation argument. The read checks the proposal token, its
+conversation, owner and current account revision. A correction retires the old
+proposal; a confirmed proposal is consumed once.
+
+## Run the actual open-weight model
+
+Create the separate model environment only if you want real local decisions.
+Mantle's environment does not install Laya or PyTorch. In a first terminal:
+
+```sh
+cd tutorials/jev-with-rasa/local-laya
+uv sync --locked
+.venv/bin/python serve_local.py --cache-dir ./model-cache
+```
+
+This downloads one pinned English checkpoint, verifies the five artifact hashes,
+and serves it on loopback port 5031 using two CPU threads. The model needs no
+provider key. Keep one cache; do not copy it into other worktrees or environments.
+See [the model setup](local-laya/README.md) for the exact runtime and weight pins.
+
+In a second terminal, from `mantle`:
+
+```sh
+make demo-local
+make worker-local
+```
+
+`demo-local` runs actual Laya proposals and exercises confirmation or cancellation
+in the application. It is a standalone local-model exercise, not a recorded Rasa
+conversation. `worker-local` keeps the account worker running on loopback 5029.
+The public TypeSafe SDK talks to our narrow local Laya adapter; no TypeSafe key
+is read or sent in this mode. Model and origin overrides are fixed in source.
 
 ## Add the Rasa conversation
 
-In one terminal, from `mantle`, keep the worker running:
-
-```sh
-make worker
-```
-
-This mode scripts the account selection. It does not interpret arbitrary phrases.
-In another terminal in the same directory, supply your issued Rasa licence and
-writer provider key as environment variables. `.env.example` lists their names;
-these commands do not automatically load an `.env` file.
+In a third terminal in `mantle`, supply your issued Rasa licence and configured
+writer-provider key as environment variables. `.env.example` lists their names;
+these commands do not automatically load it.
 
 ```sh
 make validate
@@ -52,55 +73,63 @@ make train
 make run
 ```
 
-The REST server listens on loopback port 5030. Send a public fictional demo code,
-then request transactions. These are proposed user messages, not a recorded run:
+The assistant listens on loopback port 5030. These are proposed user messages;
+inspect the actual replies and tool results:
 
 ```sh
 curl -s http://127.0.0.1:5030/webhooks/rest/webhook \
   -H 'Content-Type: application/json' \
-  -d '{"sender":"jev-demo-a","message":"Use demo 111111"}'
+  -d '{"sender":"local-model-demo-a","message":"Use demo 111111"}'
 curl -s http://127.0.0.1:5030/webhooks/rest/webhook \
   -H 'Content-Type: application/json' \
-  -d '{"sender":"jev-demo-a","message":"Show my current account transactions"}'
+  -d '{"sender":"local-model-demo-a","message":"Show my current account transactions"}'
+curl -s http://127.0.0.1:5030/webhooks/rest/webhook \
+  -H 'Content-Type: application/json' \
+  -d '{"sender":"local-model-demo-a","message":"Yes"}'
 ```
 
-## Use the actual Jev service
+The proposal tool sends the named-account question through `context.send`.
+The confirmation tool checks the latest actual `UserUttered` event through the
+public tool context, and requires a later user event than the one that created
+the proposal. It handles a small explicit yes/no vocabulary. Extend and test that
+vocabulary and the dialogue in the languages you intend to serve.
 
-Stop the scripted worker with Ctrl-C. Supply `TYPESAFE_API_KEY` to the worker's
-environment and run `make worker-live`. Only this explicit mode sends paid Jev
-requests. The model and API origin are fixed in source; ambient model/base-URL
-overrides cannot redirect the request. A two-second SDK HTTP timeout and disabled
-automatic retries bound each attempt. This is not a total conversational deadline.
+## Optional hosted Jev adapter
 
-Each admitted worker request makes one SDK call. Mantle may make additional
-model/tool calls: this project does not promise one writer call per turn.
-The returned decision includes the resolved model, confidence, probabilities and
-provider token counts when present. Missing counts remain null. Keep measured
-runs and billing records in private storage, not this public example repository.
-Measure first useful answer separately from an acknowledgement.
+Stop `worker-local` with Ctrl-C before switching modes. `make worker` uses
+scripted SDK replies. `make worker-live` uses the paid TypeSafe service and
+requires `TYPESAFE_API_KEY`. Only that explicit mode sends hosted Jev requests.
+It pins `jev-1.13.0`; local mode identifies the Laya checkpoint by its own revision,
+not as Jev. Neither path uses an unqualified confidence cutoff to authorise reads.
 
-## Where the checks belong
+The retained SDK client closes on worker shutdown. HTTP timeout is two seconds
+and retries are disabled; this single-threaded development worker queues
+requests, so the timeout is not a whole-conversation deadline. Each proposal
+makes one decision request; confirmation uses the saved proposal without another
+decision call. Mantle can make further model calls across the conversation.
 
-`worker/jacaranda_jev/accounts.py` filters account options for the selected demo
-and rechecks their revision and eligibility inside the read. `selector.py` checks
-the returned choice, probability keys, numerical bounds and model identity.
-The account IDs never become tool arguments supplied by Mantle's model.
+Confidence and probabilities describe the selected backend's result. Preserve
+its model identity and evaluate its scores on your own task; do not treat two
+backends' raw confidence as interchangeable. Missing token usage remains null.
+Keep measured runs and billing evidence private. This public project contains
+the code, fictional fixtures, locks and setup needed to reproduce the tutorial.
 
-These public fixture codes and REST sender labels do not authenticate a person.
-The worker has no authentication and contains only fictional rows. Use it only
-on loopback. A real service needs an authenticated principal from the channel,
-an authorised data service and durable state with atomic checks. Restarting the
-worker or Rasa process resets their in-memory demo state.
+## Application boundary and cleanup
 
-Confidence summarises a distribution; it does not authorise a read or prove that
-the customer meant the selected account. There is no unqualified global cutoff
-in this example. Jev can pick `ask_customer`; real model evaluation must check
-whether it does so appropriately on ambiguous requests.
+`worker/jacaranda_jev/selector.py` checks the returned choice and distribution.
+`proposals.py` holds each conversation's current proposal. `accounts.py` checks
+current revision, offered membership and eligibility inside the read lock.
+The one-step `select` method remains only for standalone decoder/eligibility
+controls; the HTTP worker exposes the proposal, confirmation and cancellation
+routes used by Mantle.
 
-## Stop and rebuild
+Public demo codes and REST sender labels do not authenticate a customer. All
+three services are unauthenticated development examples containing only fictional
+records; keep them on loopback. A real service needs authenticated channel
+identity, an authorised data service and durable atomic state. Restarting a
+process resets its in-memory fixture bindings and proposals.
 
-Ctrl-C stops each foreground service and closes the worker's SDK client. Retain
-the source, `pyproject.toml` and `uv.lock`; recreate only the selected environment
-with `uv sync --locked --prerelease=allow`. Never copy `.venv`, models or local
-credentials into another tutorial or backup. Readers who only want the native
-exercise can install `worker` separately; Mantle's environment already includes it.
+Ctrl-C stops the foreground services. Retain source, manifests and locks; rebuild
+only the environment you need. Exclude `.venv`, model caches, trained archives and
+credentials from source copies. Retire completed experiment environments instead
+of carrying them into another tutorial.

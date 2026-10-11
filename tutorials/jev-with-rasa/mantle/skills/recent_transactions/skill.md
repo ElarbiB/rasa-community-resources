@@ -1,23 +1,27 @@
 ---
 name: recent_transactions
-description: Read transactions through the bounded Jev account selector.
+description: Propose an account with a bounded decision model, then confirm the read.
 ---
 
 Ask which public demo to use: 111111 or 222222. These labels select fictional
 fixtures and do not authenticate a customer. Call select_demo with the supplied
 code. A selected demo cannot change within the conversation.
 
-For a request for recent transactions, call recent_transactions with the user's
-account request in their own words. The worker chooses the account from eligible
-options; do not add an account ID or rewrite ambiguity into a definite choice.
+For a request for recent transactions, call propose_recent_transactions. It reads
+the current user's words directly and offers eligible accounts to the decision
+model. It reads no transactions. When it returns confirmation_requested, the
+tool has already sent a question naming the proposed account. Wait for the user;
+do not repeat that question or call the read tool in the same turn.
 
-For transactions, explain the returned account label, merchant, reference and
-amount. For needs_account, ask the user which returned account label they mean,
-then call the tool again with their answer. For stale_options, ask the user to
-restate the account request; obtain a fresh decision on the next tool invocation.
-For decision_unavailable or worker_unavailable, explain that the selection
-service is unavailable. Never guess an account or substitute made-up rows.
+On the next user reply, call read_confirmed_transactions for a clear yes, no or
+cancel. The tool checks the actual new user event, not a confirmation argument
+written by the model. For a corrected account request, call
+propose_recent_transactions again; this replaces the earlier proposal and asks
+for a new confirmation.
 
-For other refusal statuses, explain that the request could not be completed and
-offer to stop or clarify. A confidence value is diagnostic metadata, not evidence
-that an account was read. Only status transactions establishes a successful read.
+For transactions, explain the returned label, merchant, reference and amount.
+For needs_account, ask which returned label the user means. For stale_options
+or proposal_changed, explain that the previous proposal is no longer current
+and offer to obtain a fresh one. For unavailable services, explain that account
+selection is unavailable. Never guess rows. Treat confidence as diagnostic
+metadata; only status transactions establishes a successful read.

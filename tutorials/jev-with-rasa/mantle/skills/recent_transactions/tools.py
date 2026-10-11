@@ -5,9 +5,11 @@ from urllib.error import URLError
 from urllib.request import Request, urlopen
 from rasa.mantle.tools.decorator import ToolContext, tool
 from rasa.mantle.tools.result import ToolResult
+from rasa.shared.core.events import UserUttered
 
 DEMO_CODES = {"111111": "demo-a", "222222": "demo-b"}
 BINDINGS = {}
+PROPOSALS = {}
 
 
 def sender():
@@ -27,9 +29,9 @@ async def select_demo(code: str, context: ToolContext = None) -> ToolResult:
     return ToolResult(llm_response={"status": "demo_ready"})
 
 
-def request_worker(owner, message):
-    request = Request("http://127.0.0.1:5029/select", method="POST",
-                      data=json.dumps({"owner": owner, "message": message}).encode(),
+def request_worker(path, body):
+    request = Request("http://127.0.0.1:5029" + path, method="POST",
+                      data=json.dumps(body).encode(),
                       headers={"Content-Type": "application/json"})
     try:
         with urlopen(request, timeout=3) as response:
@@ -41,10 +43,54 @@ def request_worker(owner, message):
         return {"status": "worker_unavailable"}
 
 
-@tool(description="Read fictional recent transactions using the user's account request. The application chooses demo identity and Jev chooses only among the offered accounts.")
-async def recent_transactions(message: str, context: ToolContext = None) -> ToolResult:
-    owner = BINDINGS.get(sender())
+def last_user(context):
+    if context is None:
+        return None
+    return next((event for event in reversed(context.events) if isinstance(event, UserUttered)), None)
+
+
+@tool(description="Propose a fictional account for the current user's transaction request, then ask them to confirm it. Reads no transactions.")
+async def propose_recent_transactions(context: ToolContext = None) -> ToolResult:
+    key = sender()
+    owner = BINDINGS.get(key)
     if owner is None:
         return ToolResult(llm_response={"status": "needs_demo_code"})
-    result = await asyncio.to_thread(request_worker, owner, message)
+    user = last_user(context)
+    if user is None:
+        return ToolResult(llm_response={"status": "context_required"})
+    PROPOSALS.pop(key, None)
+    result = await asyncio.to_thread(request_worker, "/propose",
+                                    {"owner": owner, "conversation": key, "message": user.text})
+    token = result.pop("proposal_token", None)
+    if result.get("status") == "account_proposal" and token:
+        if context.is_cancelled:
+            return ToolResult(llm_response={"status": "interrupted"})
+        await context.send(f"I can read your {result['label']}. Shall I use that account?")
+        if context.is_cancelled:
+            return ToolResult(llm_response={"status": "interrupted"})
+        PROPOSALS[key] = (token, owner, user.timestamp)
+        result["status"] = "confirmation_requested"
+    return ToolResult(llm_response=result)
+
+
+@tool(description="Read the proposed fictional account only after a new user message explicitly says yes; no model-provided account, owner or confirmation arguments.")
+async def read_confirmed_transactions(context: ToolContext = None) -> ToolResult:
+    key = sender()
+    proposal = PROPOSALS.get(key)
+    user = last_user(context)
+    if proposal is None:
+        return ToolResult(llm_response={"status": "needs_account_proposal"})
+    token, owner, created = proposal
+    if user is None or user.timestamp <= created:
+        return ToolResult(llm_response={"status": "needs_confirmation"})
+    text = (user.text or "").strip().lower().strip(".!?")
+    if text in {"no", "no thanks", "cancel"}:
+        path = "/cancel"
+    elif text in {"yes", "yes please", "confirm"}:
+        path = "/confirm"
+    else:
+        return ToolResult(llm_response={"status": "needs_confirmation"})
+    del PROPOSALS[key]
+    result = await asyncio.to_thread(request_worker, path,
+                                    {"owner": owner, "conversation": key, "token": token})
     return ToolResult(llm_response=result)

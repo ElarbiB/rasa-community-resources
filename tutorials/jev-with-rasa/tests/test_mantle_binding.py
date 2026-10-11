@@ -6,7 +6,8 @@ from pathlib import Path
 from threading import Thread
 from types import SimpleNamespace
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, AsyncMock
+from rasa.shared.core.events import UserUttered
 from typesafe_sdk import RetryPolicy, TypeSafeClient
 from jacaranda_jev.accounts import Accounts
 from jacaranda_jev.scripted import scripted_transport
@@ -30,7 +31,7 @@ class MantleBindings(unittest.IsolatedAsyncioTestCase):
         original = self.tools.urlopen
         def local(request, **kwargs):
             from urllib.request import Request
-            request = Request(f"http://127.0.0.1:{self.server.server_port}/select", data=request.data,
+            request = Request(f"http://127.0.0.1:{self.server.server_port}{request.full_url.removeprefix("http://127.0.0.1:5029")}", data=request.data,
                               headers=dict(request.headers), method=request.method)
             return original(request, **kwargs)
         self.redirect = patch.object(self.tools, "urlopen", side_effect=local)
@@ -38,6 +39,8 @@ class MantleBindings(unittest.IsolatedAsyncioTestCase):
         self.context = patch("rasa.mantle.orchestration.turn_context.current_turn_context",
                              return_value=SimpleNamespace(sender_id="sender-a"))
         self.context.start()
+        self.tool_context = SimpleNamespace(events=[UserUttered("Show my current account", timestamp=1)],
+                                            send=AsyncMock(), is_cancelled=False)
 
     async def asyncTearDown(self):
         self.context.stop()
@@ -48,17 +51,22 @@ class MantleBindings(unittest.IsolatedAsyncioTestCase):
         self.client.close()
 
     async def test_tool_does_not_offer_owner_or_account_id(self):
-        self.assertEqual(set(inspect.signature(self.tools.recent_transactions).parameters), {"message", "context"})
+        self.assertEqual(set(inspect.signature(self.tools.propose_recent_transactions).parameters), {"context"})
 
     async def test_unbound_sender_is_refused_before_worker(self):
-        result = await self.tools.recent_transactions("Current")
+        result = await self.tools.propose_recent_transactions(context=self.tool_context)
         self.assertEqual(result.llm_response, {"status": "needs_demo_code"})
         self.assertEqual(self.requests, [])
 
     async def test_actual_mantle_tool_reaches_native_sdk_and_read(self):
         await self.tools.select_demo("111111")
-        result = await self.tools.recent_transactions("Show my current account")
-        self.assertEqual(result.llm_response["status"], "transactions")
+        result = await self.tools.propose_recent_transactions(context=self.tool_context)
+        self.assertEqual(result.llm_response["status"], "confirmation_requested")
+        self.assertEqual(self.accounts.reads, [])
+        self.tool_context.send.assert_awaited_once_with("I can read your current account. Shall I use that account?")
+        self.tool_context.events.append(UserUttered("yes", timestamp=2))
+        read = await self.tools.read_confirmed_transactions(context=self.tool_context)
+        self.assertEqual(read.llm_response["status"], "transactions")
         self.assertEqual(self.accounts.reads, ["A-CURRENT"])
         self.assertEqual(len(self.requests), 1)
 
@@ -71,16 +79,47 @@ class MantleBindings(unittest.IsolatedAsyncioTestCase):
         await self.tools.select_demo("111111")
         with patch("rasa.mantle.orchestration.turn_context.current_turn_context",
                    return_value=SimpleNamespace(sender_id="sender-b")):
-            self.assertEqual((await self.tools.recent_transactions("Current")).llm_response,
+            self.assertEqual((await self.tools.propose_recent_transactions(context=self.tool_context)).llm_response,
                              {"status": "needs_demo_code"})
 
     async def test_worker_connection_error_does_not_invent_rows(self):
         from urllib.error import URLError
         await self.tools.select_demo("111111")
         with patch.object(self.tools, "urlopen", side_effect=URLError("scripted offline")):
-            self.assertEqual((await self.tools.recent_transactions("Current")).llm_response,
+            self.assertEqual((await self.tools.propose_recent_transactions(context=self.tool_context)).llm_response,
                              {"status": "worker_unavailable"})
 
+
+    async def test_same_user_event_cannot_confirm_its_own_proposal(self):
+        await self.tools.select_demo("111111")
+        await self.tools.propose_recent_transactions(context=self.tool_context)
+        result = await self.tools.read_confirmed_transactions(context=self.tool_context)
+        self.assertEqual(result.llm_response["status"], "needs_confirmation")
+        self.assertEqual(self.accounts.reads, [])
+
+    async def test_non_confirmation_does_not_read(self):
+        await self.tools.select_demo("111111")
+        await self.tools.propose_recent_transactions(context=self.tool_context)
+        self.tool_context.events.append(UserUttered("savings instead", timestamp=2))
+        result = await self.tools.read_confirmed_transactions(context=self.tool_context)
+        self.assertEqual(result.llm_response["status"], "needs_confirmation")
+        self.assertEqual(self.accounts.reads, [])
+
+    async def test_actual_no_cancels_without_reading(self):
+        await self.tools.select_demo("111111")
+        await self.tools.propose_recent_transactions(context=self.tool_context)
+        self.tool_context.events.append(UserUttered("no", timestamp=2))
+        result = await self.tools.read_confirmed_transactions(context=self.tool_context)
+        self.assertEqual(result.llm_response["status"], "proposal_cancelled")
+        self.assertEqual(self.accounts.reads, [])
+
+    async def test_interrupted_proposal_is_not_bound_for_confirmation(self):
+        await self.tools.select_demo("111111")
+        self.tool_context.is_cancelled = True
+        result = await self.tools.propose_recent_transactions(context=self.tool_context)
+        self.assertEqual(result.llm_response["status"], "interrupted")
+        self.assertEqual(self.tools.PROPOSALS, {})
+        self.tool_context.send.assert_not_awaited()
 
 if __name__ == "__main__":
     unittest.main()
