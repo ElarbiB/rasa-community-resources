@@ -34,7 +34,7 @@ Direct calls record the question and result in agent history by default. The
 native controls compare that path with an explicit nonrecording call. Separate
 agent-as-tool controls use a scripted native Model: default context reset omits
 the previous fixture question, while preserve_context=True retains it.
-Those are SDK history controls, not provider accuracy or privacy certification.
+The controls capture native wrapper inputs alongside the calling agent’s messages.
 
 Inspect caller messages alongside the specialist's second model input:
 

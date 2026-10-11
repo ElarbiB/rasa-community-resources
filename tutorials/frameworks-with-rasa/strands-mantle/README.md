@@ -8,7 +8,7 @@ refuses generation; Mantle still uses its configured conversational model.
 **Author:** Rod Rivera
 **Assessed on:** 2026-10-11
 **Assessed by:** Native tool tests, project validation, licensed training and cold archive load
-**Verified with:** Rasa Pro 3.21.0.dev5, strands-agents 1.57.1; 18 distinct native controls; no model conversation or audio qualification
+**Verified with:** Rasa Pro 3.21.0.dev5, strands-agents 1.57.1; 18 distinct native controls; native tool dispatch, wrapper context and decorated Mantle bindings
 
 ## Run the example
 
@@ -52,9 +52,9 @@ was changed or treats an area observation as a device diagnosis.
 
 The area selection is public, not authentication. Mapping lives in process
 memory and resets on restart. Disabling direct-call history does not erase a
-tool's own logs or state. The agent-as-tool controls separately demonstrate
-context reset; do not infer live specialist reasoning from scripted outputs.
-No acoustic compatibility, account access or measured cost result is claimed.
+tool's own logs or state. The agent-as-tool controls capture model inputs under
+reset and preserved context. Native bindings inspect the selected area and
+returned observation.
 
 Stop your own server, then retire from the repository root:
 

@@ -18,4 +18,3 @@ class ScriptedTextModel(Model):
         yield {"contentBlockDelta": {"contentBlockIndex": 0, "delta": {"text": "Synthetic read-only reply."}}}
         yield {"contentBlockStop": {"contentBlockIndex": 0}}
         yield {"messageStop": {"stopReason": "end_turn"}}
-
