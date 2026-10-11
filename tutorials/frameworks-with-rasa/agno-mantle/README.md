@@ -92,3 +92,8 @@ python3 scripts/workspace.py retire tutorials/frameworks-with-rasa/agno-mantle -
 
 Environment retirement retains the database, source and lock. Review stored
 data separately; an ignored database is not disposable by default.
+
+Run `../agno/demo_handoff_owner.py` with the selected combined Python runtime
+to inspect the one-argument ownership mutation. Both native runs return checked
+public advice, while their initial memory inputs differ. Each starts with the
+same seeded records and empty history in an independent database.

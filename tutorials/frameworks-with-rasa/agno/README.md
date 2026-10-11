@@ -34,7 +34,7 @@ make test
 ```
 
 The printed rows are observations from the selected native SDK; they are not
-an assessment of answer quality. Fourteen core controls and five actual Mantle binding controls pass
+an assessment of answer quality. Fifteen core controls and five actual Mantle binding controls pass
 in the selected combined runtime. The standalone lock is checked separately.
 
 After your jobs finish, preserve any needed database or output separately and
@@ -48,3 +48,8 @@ References: [memory](https://docs.agno.com/memory/overview) and
 [sessions](https://docs.agno.com/sessions/overview). These document separate
 user and conversation scopes. An application must bind its user ID to an
 appropriate trusted identity; a supplied ID by itself is not authentication.
+
+Run `../agno/demo_handoff_owner.py` with the selected combined Python runtime
+to inspect the one-argument ownership mutation. Both native runs return checked
+public advice, while their initial memory inputs differ. Each starts with the
+same seeded records and empty history in an independent database.
