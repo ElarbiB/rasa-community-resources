@@ -127,7 +127,7 @@ def observe_handoff_owner_mutation(db_path: Path) -> dict:
     """A one-argument mutation can pass response shape while supplying wrong context.
 
     Seed two public synthetic copies of A's fact under the stable and fallback
-    owners. Both handlers use the same database, tool, question and result checks.
+    owners. Both handlers keep the same tool, question and result checks.
     Each run starts with identical seeded records and empty history in an independent
     database. Only the handler's run user_id argument changes.
     """

@@ -15,7 +15,7 @@
     "tutorials/frameworks-with-rasa/agno/uv.lock": "478b8f7cc4468c94ef798f8c8019f487bebbc1d5a03fdf8a9f101158403b4f04",
     "tutorials/frameworks-with-rasa/agno/shop_adviser/__init__.py": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
     "tutorials/frameworks-with-rasa/agno/shop_adviser/adviser.py": "0422f6578e6cb30de6179826e638449c8cf66a4a60bc23bbbc0e95da1dc27cf0",
-    "tutorials/frameworks-with-rasa/agno/shop_adviser/native_fixture.py": "a467ed916b7fcb55f6eeda7199a97abe2b6bc7ace5d2f49b54e98c3acf72ce3b",
+    "tutorials/frameworks-with-rasa/agno/shop_adviser/native_fixture.py": "d1ba1ca0033479557147d4fc68c23b7c36528103aafb0448331d6d28d93fa7b6",
     "tutorials/frameworks-with-rasa/agno/shop_adviser/scope_binding.py": "cca50fd57c8d6eab4ad33d4ab6fb0990965daf7c1660e84e46c1c1745d34b7ea",
     "tutorials/frameworks-with-rasa/agno/shop_adviser/service.py": "82b4e808e74daf98412b16401db879a7c70d321195ec4886ae4a3cc012b06f67",
     "tutorials/frameworks-with-rasa/agno/tests/test_handoff.py": "b38eb1b57ba43fc1072688ee399643d712deaf88f859f88be6d3900aac9a2f03",
@@ -189,6 +189,14 @@
         "before": "478b8f7cc4468c94ef798f8c8019f487bebbc1d5a03fdf8a9f101158403b4f04",
         "after": "478b8f7cc4468c94ef798f8c8019f487bebbc1d5a03fdf8a9f101158403b4f04"
       }
-    }
+    },
+    "qualified_revision": "f15a3a3005b96f442345674188d3c84aef6f48ec"
+  },
+  "mutation_docstring_followup": {
+    "checked_at": "2026-10-11T18:08:46.920479+00:00",
+    "file": "tutorials/frameworks-with-rasa/agno/shop_adviser/native_fixture.py",
+    "before": "a467ed916b7fcb55f6eeda7199a97abe2b6bc7ace5d2f49b54e98c3acf72ce3b",
+    "after": "d1ba1ca0033479557147d4fc68c23b7c36528103aafb0448331d6d28d93fa7b6",
+    "change": "Clarify independent databases with matching seeded records; function body unchanged."
   }
 }
