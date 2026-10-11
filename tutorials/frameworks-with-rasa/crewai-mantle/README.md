@@ -8,7 +8,7 @@ tool failures before returning research to the conversation.
 **Author:** Rod Rivera
 **Assessed on:** 2026-10-11
 **Assessed by:** Cedar (Codex)
-**Verified with:** Rasa Pro 3.21.0.dev5, CrewAI 1.15.27 and Python 3.12.13; 32 native controls, project validation, licensed training and cold archive load passed
+**Verified with:** Rasa Pro 3.21.0.dev5, CrewAI 1.15.27 and Python 3.12.13; 36 native controls, project validation, licensed training and cold archive load passed
 
 ## Start both selected runtimes
 

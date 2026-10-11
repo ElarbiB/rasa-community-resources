@@ -1,35 +1,15 @@
 {
   "schema": 1,
-  "checked_at": "2026-10-11T16:31:51.746894+00:00",
+  "checked_at": "2026-10-11T16:47:25.493698+00:00",
   "versions": {
     "rasa-pro": "3.21.0.dev5",
     "crewai": "1.15.27",
     "python": "3.12.13"
   },
   "source_sha256": {
-    "tutorials/frameworks-with-rasa/crewai/.rasa-environment-retired.json": "1368b8991afc22b04cdf2b7f7bf29fabfd012d0642ee5f67658d6a4698457c00",
-    "tutorials/frameworks-with-rasa/crewai/Makefile": "5468066497a34ceb53ec839f973a68109f49c11305268d512548cc49e9b94a09",
-    "tutorials/frameworks-with-rasa/crewai/README.md": "ebe06b2657d58313629c6abf09249cb3be5ae43d3a4a6333298348f120d72624",
-    "tutorials/frameworks-with-rasa/crewai/claim_crew/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "tutorials/frameworks-with-rasa/crewai/claim_crew/acceptance.py": "325ca743ff73c7f133bf8660bea426aaf30a715075a1c13c28ac143eaa7eb7f8",
-    "tutorials/frameworks-with-rasa/crewai/claim_crew/handoff.py": "7cd59da3bf98d6c969c1540da5f71a200efc8b376f1beb93ec70c5243936327f",
-    "tutorials/frameworks-with-rasa/crewai/claim_crew/native_fixture.py": "e94320717999dcc1ed377892b81c19a18f333023a379001a7f194bd931b25291",
-    "tutorials/frameworks-with-rasa/crewai/claim_crew/runtime.py": "f29aff13cad3d0850c7cb66e7c9e47920fbcd8ec0ee0c8d9f383c0f33d26bff9",
-    "tutorials/frameworks-with-rasa/crewai/demo_completion.py": "5c3ec55ade7a599d864fb007f7cb2dc8cc0508cf239bdee08b31011e5c9f8d4e",
-    "tutorials/frameworks-with-rasa/crewai/harborcover_claim_crew.egg-info/PKG-INFO": "e872541381e68d60859227c150f9aaab6bd98d2831ac2575a23ee55306297595",
-    "tutorials/frameworks-with-rasa/crewai/harborcover_claim_crew.egg-info/SOURCES.txt": "1847061bf93878b4d204b0346b4472a6fae4a7e3c72cced9fe4afe2e0e104b96",
-    "tutorials/frameworks-with-rasa/crewai/harborcover_claim_crew.egg-info/dependency_links.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
-    "tutorials/frameworks-with-rasa/crewai/harborcover_claim_crew.egg-info/requires.txt": "dc97ff6f9dfb10e1529d6076dcdd949bc229be26da56ec509219dc8efcc24b92",
-    "tutorials/frameworks-with-rasa/crewai/harborcover_claim_crew.egg-info/top_level.txt": "36112404de2d170821acbbef8ac6ab5f4184a688f56755736a6efc3dd84aa753",
-    "tutorials/frameworks-with-rasa/crewai/pyproject.toml": "2f34a39d2afc95c346da67b1e5c4e56c3d72d0eb953b2b80458e2242eb455694",
-    "tutorials/frameworks-with-rasa/crewai/tests/test_handoff.py": "af8c68edc5ab3f47f3ce3e9cd99e3758350371667face5e5ffd3c4f99ac697a0",
-    "tutorials/frameworks-with-rasa/crewai/tests/test_native_completion.py": "879a49ef83a7addd80e03a494a12bc4f2cb7f73d27260e1b61f3b59b732fea3c",
-    "tutorials/frameworks-with-rasa/crewai/tests/test_task_acceptance.py": "6032e67911231447d4f999ac5733a96c7fe59ca91f4f283e4c261bb0ac3060c6",
-    "tutorials/frameworks-with-rasa/crewai/uv.lock": "e21641f60ba7cd2efc968c920c6b3deb5cc3f992a607e7b0e8e366a6ca15be8e",
-    "tutorials/frameworks-with-rasa/crewai/worker.py": "8ec8e9b09a8ee30c5bee8ed8a5d5dfd2a84995dff64cba67d678dde45eb18353",
     "tutorials/frameworks-with-rasa/crewai-mantle/.env.example": "a831a79439ca84d1a13eddd2072e936c460b79974a7a54884c7770fbe4fbc489",
     "tutorials/frameworks-with-rasa/crewai-mantle/Makefile": "95c7bcd936e6425edf7845e2984302748d0d1e8ed99c719a611727c3eb854385",
-    "tutorials/frameworks-with-rasa/crewai-mantle/README.md": "412d556894d1383e143a69c8578eee59092d449c491fd04538c80a7d3d0858d8",
+    "tutorials/frameworks-with-rasa/crewai-mantle/README.md": "4408cf9e7a51e4b5d72cbb715e2994b21c4a2a8ce268f399b6fb38d0f45a9aa6",
     "tutorials/frameworks-with-rasa/crewai-mantle/agent.yml": "65e42be497d72c69cd13cf31cecb29a0d61cc42ffbd431d90847989e54f26868",
     "tutorials/frameworks-with-rasa/crewai-mantle/integrations.yml": "0308966d5bd45fcef8fc7c4a887c7f3081078b5dfaf31655bed3bca2d9069007",
     "tutorials/frameworks-with-rasa/crewai-mantle/pyproject.toml": "8c651738560d51a07699f2ca342457a9f1cd56dcd32f4f016294c0b53863b8af",
@@ -41,12 +21,29 @@
     "tutorials/frameworks-with-rasa/crewai-transport/crew_transport/__init__.py": "fa4d89bcc0d04e17b682236436289ea50a71ecb9d73a353ef21ea3880408ce95",
     "tutorials/frameworks-with-rasa/crewai-transport/pyproject.toml": "e01e3c733fbf563cf0f590d2100844e137bdd5d1ac6a0be6dc340e7241fabdd0",
     "tutorials/frameworks-with-rasa/crewai-transport/tests/test_protocol.py": "eb3bda3d79b0a29a58fc78d0b0b3b7a371c3bb242518b7d0c28b0b1a3b71b224",
-    "tutorials/frameworks-with-rasa/crewai-transport/uv.lock": "ff7433916ca7f76fb6c9dd6e8a87c64d6ade61153b915dfe76ae6778bce751d7"
+    "tutorials/frameworks-with-rasa/crewai-transport/uv.lock": "ff7433916ca7f76fb6c9dd6e8a87c64d6ade61153b915dfe76ae6778bce751d7",
+    "tutorials/frameworks-with-rasa/crewai/Makefile": "5468066497a34ceb53ec839f973a68109f49c11305268d512548cc49e9b94a09",
+    "tutorials/frameworks-with-rasa/crewai/README.md": "64eabcbd6424140e973ffb2f7fc5f8ea3608ce6fd4402d34822e91ddbbb5ebb9",
+    "tutorials/frameworks-with-rasa/crewai/claim_crew/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tutorials/frameworks-with-rasa/crewai/claim_crew/acceptance.py": "325ca743ff73c7f133bf8660bea426aaf30a715075a1c13c28ac143eaa7eb7f8",
+    "tutorials/frameworks-with-rasa/crewai/claim_crew/failure_signals.py": "390c231f95daff7e400cbc760521c3193f9f5ccac1882f849964562ea03b90aa",
+    "tutorials/frameworks-with-rasa/crewai/claim_crew/handoff.py": "7cd59da3bf98d6c969c1540da5f71a200efc8b376f1beb93ec70c5243936327f",
+    "tutorials/frameworks-with-rasa/crewai/claim_crew/native_fixture.py": "e94320717999dcc1ed377892b81c19a18f333023a379001a7f194bd931b25291",
+    "tutorials/frameworks-with-rasa/crewai/claim_crew/runtime.py": "f29aff13cad3d0850c7cb66e7c9e47920fbcd8ec0ee0c8d9f383c0f33d26bff9",
+    "tutorials/frameworks-with-rasa/crewai/demo_completion.py": "5c3ec55ade7a599d864fb007f7cb2dc8cc0508cf239bdee08b31011e5c9f8d4e",
+    "tutorials/frameworks-with-rasa/crewai/demo_failure_signals.py": "2f44d2ddf63aeb1406183a5544f40868b9a692a60cc883776eba6e5ec7792d3d",
+    "tutorials/frameworks-with-rasa/crewai/pyproject.toml": "2f34a39d2afc95c346da67b1e5c4e56c3d72d0eb953b2b80458e2242eb455694",
+    "tutorials/frameworks-with-rasa/crewai/tests/test_failure_signals.py": "8b84140bc53e8b2f1d0ef63a1fc7d957629a4f21459001189824ef1e140596ba",
+    "tutorials/frameworks-with-rasa/crewai/tests/test_handoff.py": "af8c68edc5ab3f47f3ce3e9cd99e3758350371667face5e5ffd3c4f99ac697a0",
+    "tutorials/frameworks-with-rasa/crewai/tests/test_native_completion.py": "879a49ef83a7addd80e03a494a12bc4f2cb7f73d27260e1b61f3b59b732fea3c",
+    "tutorials/frameworks-with-rasa/crewai/tests/test_task_acceptance.py": "6032e67911231447d4f999ac5733a96c7fe59ca91f4f283e4c261bb0ac3060c6",
+    "tutorials/frameworks-with-rasa/crewai/uv.lock": "e21641f60ba7cd2efc968c920c6b3deb5cc3f992a607e7b0e8e366a6ca15be8e",
+    "tutorials/frameworks-with-rasa/crewai/worker.py": "8ec8e9b09a8ee30c5bee8ed8a5d5dfd2a84995dff64cba67d678dde45eb18353"
   },
   "native_controls": {
     "native_crew_and_handoff": {
-      "ran": 21,
-      "passed": 21,
+      "ran": 25,
+      "passed": 25,
       "skipped": 0
     },
     "process_protocol": {
@@ -89,5 +86,50 @@
     "recorded_tool_failures": 1,
     "guard_present": "incomplete",
     "only_failure_guard_removed": "ready"
-  }
+  },
+  "original_build_qualification": {
+    "checked_at": "2026-10-11T16:31:51.746894+00:00",
+    "native_controls": {
+      "native_crew_and_handoff": {
+        "ran": 21,
+        "passed": 21,
+        "skipped": 0
+      },
+      "process_protocol": {
+        "ran": 7,
+        "passed": 7,
+        "skipped": 0
+      },
+      "mantle_binding": {
+        "ran": 4,
+        "passed": 4,
+        "skipped": 0
+      }
+    },
+    "qualification_log_sha256": "3117983efc19790254aa246329e2c71d1d0de7abade79c5b9498c484ccf45068",
+    "native_followup_log_sha256": "97aab587ab484fdb325d0874d9a9e230abd397e5d0e692121956a5e097d2e3db"
+  },
+  "failure_signal_followup": {
+    "native_core_controls": 25,
+    "protocol_controls": 7,
+    "mantle_binding_controls": 4,
+    "native_log_sha256": "3d769c45f280d199848f8abe1f99515c4d5dc4dc925e70bbbc9576983149b282",
+    "demo_log_sha256": "7274f5f909ca9fc2f3480dcb6e2945857c72a178fa243832b284817365bd4526",
+    "matrix_cases": 6,
+    "observed_source_tool_calls_per_case": 1,
+    "same_error_wording": "Synthetic source temporarily unavailable (code: source_unavailable)",
+    "plain_error_string": {
+      "ignore": "ready",
+      "warn": "ready",
+      "raise": "ready",
+      "recorded_failures": 0
+    },
+    "declared_failure": {
+      "ignore": "ready",
+      "warn": "incomplete",
+      "raise": "ToolExecutionFailedError"
+    },
+    "changes": "Native fixture matrix, four controls and reader demo added after original build; application tools, dependencies and training configuration unchanged."
+  },
+  "source_inventory_followup": "Inventory covers committed source and the newly added native fixtures; regenerable egg-info metadata hashes from the initial development inventory are omitted."
 }
