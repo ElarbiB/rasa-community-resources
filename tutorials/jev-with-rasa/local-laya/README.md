@@ -32,8 +32,8 @@ needs its issued licence and configured writer-provider key for conversations.
 Interpret model confidence using its own implementation and qualification.
 The application uses no confidence cutoff to authorise a read. It asks for
 confirmation of a named proposal and checks current eligibility again.
-The runtime may warn about shipped temperature configuration; preserve warnings
-with your local run records rather than treating confidence as certified accuracy.
+The runtime logs shipped-temperature warnings while loading. Retain them with
+the model identity when assessing scores on your own task.
 
 Sources: [Laya code](https://github.com/NandhaKishorM/laya),
 [pinned model repository](https://huggingface.co/convaiinnovations/laya/tree/7b928d828b7b0e022f929d9bd2e44165aa270148),

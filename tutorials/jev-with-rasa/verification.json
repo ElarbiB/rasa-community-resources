@@ -9,7 +9,7 @@
   "source_sha256": {
     "tutorials/jev-with-rasa/tests/test_worker_lifecycle.py": "d1518359d5fdc2411591420c947a2a0e59e5807dfac9460f37336f65e8792884",
     "tutorials/jev-with-rasa/README.md": "4ef7fc1e65ea1e6095e3785c387b54ece4cc6e3b4c881ffbf490cc1e5ccc6b94",
-    "tutorials/jev-with-rasa/local-laya/README.md": "eebd2f9defc6580dedb6db1023cfd361ee7ea58f594787954de9cf2999bacece",
+    "tutorials/jev-with-rasa/local-laya/README.md": "4b5d418912b8804b40e8cbf74842172dfb7795e244ba456a572f7d686e77bf51",
     "tutorials/jev-with-rasa/local-laya/model-manifest.json": "e0aa65e0abb674b1b708cf30c041813199e2397af0fd1d8cbfa0bc3a4c8c83f7",
     "tutorials/jev-with-rasa/local-laya/pyproject.toml": "1016ca00ae0be9795980c3ea0fc32cb50b2d6e3149bd6cfdc805b0db0d313558",
     "tutorials/jev-with-rasa/local-laya/serve_local.py": "2736aa19f4f3843e06ff6a4c84612618893cf2289c7ea33835c00d63852ec899",
