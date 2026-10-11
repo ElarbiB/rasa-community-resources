@@ -25,7 +25,7 @@
     "tutorials/frameworks-with-rasa/agno-mantle/.env.example": "ee6ecee5193b173a48a5569200e843dcdfae00ef9379aed609a42b4b11004fdb",
     "tutorials/frameworks-with-rasa/agno-mantle/.gitignore": "9cccd0ffb8d979d0ad74f3bc518bc877b9ec5936aa15d0d4ead880c09ecc1793",
     "tutorials/frameworks-with-rasa/agno-mantle/Makefile": "329536cb37fcda4a8821fb0b6b4ff2ee2581403aacf4ab6fe9eb6eb73cf6b090",
-    "tutorials/frameworks-with-rasa/agno-mantle/README.md": "d3e53c1350c40d13bd9cb05709986f46002667a1f5ca1d4251119cf971f3d983",
+    "tutorials/frameworks-with-rasa/agno-mantle/README.md": "2e29e7aa6827e4144e3cba98ba0bbc76abfd597b68462ff48eb7c10ab1f99601",
     "tutorials/frameworks-with-rasa/agno-mantle/agent.yml": "493b86c59c31fc37ccece90bc63f4438855857e7ccd40c988e3c9471bcf0b1ed",
     "tutorials/frameworks-with-rasa/agno-mantle/integrations.yml": "0308966d5bd45fcef8fc7c4a887c7f3081078b5dfaf31655bed3bca2d9069007",
     "tutorials/frameworks-with-rasa/agno-mantle/pyproject.toml": "f7e2461151662897076c9bd07245a00f7f40db1b53b9ebbd8bd7a7bb6c856fbc",
@@ -198,5 +198,121 @@
     "before": "a467ed916b7fcb55f6eeda7199a97abe2b6bc7ace5d2f49b54e98c3acf72ce3b",
     "after": "d1ba1ca0033479557147d4fc68c23b7c36528103aafb0448331d6d28d93fa7b6",
     "change": "Clarify independent databases with matching seeded records; function body unchanged."
-  }
+  },
+  "documentation_followups": [
+    {
+      "checked_at": "2026-10-11T19:27:59.919351+00:00",
+      "starting_commit": "fee3722f35592f096f4e3afb40da89372041a497",
+      "change": "Replace seat/model assessor wording with the actual named qualification checks. Original execution dates and results remain unchanged.",
+      "files": {
+        "tutorials/frameworks-with-rasa/agno-mantle/README.md": {
+          "before": "d3e53c1350c40d13bd9cb05709986f46002667a1f5ca1d4251119cf971f3d983",
+          "after": "2e29e7aa6827e4144e3cba98ba0bbc76abfd597b68462ff48eb7c10ab1f99601"
+        }
+      },
+      "unchanged_source_sha256_pairs": {
+        "tutorials/frameworks-with-rasa/agno/Makefile": {
+          "before": "586624e3dd528d6f67d8aa9a64d561270ced5fcb5f052e5e28aa65a6f8ada5a1",
+          "after": "586624e3dd528d6f67d8aa9a64d561270ced5fcb5f052e5e28aa65a6f8ada5a1"
+        },
+        "tutorials/frameworks-with-rasa/agno/README.md": {
+          "before": "428bc79e2937d0505034ad2149fbdab4f9d4a3b92398fbecd5d953476bd8eb7b",
+          "after": "428bc79e2937d0505034ad2149fbdab4f9d4a3b92398fbecd5d953476bd8eb7b"
+        },
+        "tutorials/frameworks-with-rasa/agno/demo_handoff_owner.py": {
+          "before": "53407f4af511b5717c9aa4a2635b58228351f30cc67f3996317dd1ef2937b958",
+          "after": "53407f4af511b5717c9aa4a2635b58228351f30cc67f3996317dd1ef2937b958"
+        },
+        "tutorials/frameworks-with-rasa/agno/demo_memory_scopes.py": {
+          "before": "6041837ade67cdd49695985f797ca5568fcc1b4d136f422b107eace6a6f9f2ed",
+          "after": "6041837ade67cdd49695985f797ca5568fcc1b4d136f422b107eace6a6f9f2ed"
+        },
+        "tutorials/frameworks-with-rasa/agno/pyproject.toml": {
+          "before": "89102da58e4a3a02a7d0320254553bd9c48e48a7f58cefbbb67ea08ba9206739",
+          "after": "89102da58e4a3a02a7d0320254553bd9c48e48a7f58cefbbb67ea08ba9206739"
+        },
+        "tutorials/frameworks-with-rasa/agno/uv.lock": {
+          "before": "478b8f7cc4468c94ef798f8c8019f487bebbc1d5a03fdf8a9f101158403b4f04",
+          "after": "478b8f7cc4468c94ef798f8c8019f487bebbc1d5a03fdf8a9f101158403b4f04"
+        },
+        "tutorials/frameworks-with-rasa/agno/shop_adviser/__init__.py": {
+          "before": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "after": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+        },
+        "tutorials/frameworks-with-rasa/agno/shop_adviser/adviser.py": {
+          "before": "0422f6578e6cb30de6179826e638449c8cf66a4a60bc23bbbc0e95da1dc27cf0",
+          "after": "0422f6578e6cb30de6179826e638449c8cf66a4a60bc23bbbc0e95da1dc27cf0"
+        },
+        "tutorials/frameworks-with-rasa/agno/shop_adviser/native_fixture.py": {
+          "before": "d1ba1ca0033479557147d4fc68c23b7c36528103aafb0448331d6d28d93fa7b6",
+          "after": "d1ba1ca0033479557147d4fc68c23b7c36528103aafb0448331d6d28d93fa7b6"
+        },
+        "tutorials/frameworks-with-rasa/agno/shop_adviser/scope_binding.py": {
+          "before": "cca50fd57c8d6eab4ad33d4ab6fb0990965daf7c1660e84e46c1c1745d34b7ea",
+          "after": "cca50fd57c8d6eab4ad33d4ab6fb0990965daf7c1660e84e46c1c1745d34b7ea"
+        },
+        "tutorials/frameworks-with-rasa/agno/shop_adviser/service.py": {
+          "before": "82b4e808e74daf98412b16401db879a7c70d321195ec4886ae4a3cc012b06f67",
+          "after": "82b4e808e74daf98412b16401db879a7c70d321195ec4886ae4a3cc012b06f67"
+        },
+        "tutorials/frameworks-with-rasa/agno/tests/test_handoff.py": {
+          "before": "b38eb1b57ba43fc1072688ee399643d712deaf88f859f88be6d3900aac9a2f03",
+          "after": "b38eb1b57ba43fc1072688ee399643d712deaf88f859f88be6d3900aac9a2f03"
+        },
+        "tutorials/frameworks-with-rasa/agno/tests/test_memory_scopes.py": {
+          "before": "b5b89eeef878c6a1c96438819fc3db52520fe30791fa0c66c164ccf770267e5f",
+          "after": "b5b89eeef878c6a1c96438819fc3db52520fe30791fa0c66c164ccf770267e5f"
+        },
+        "tutorials/frameworks-with-rasa/agno/tests/test_owner_mutation.py": {
+          "before": "a0facc92811f48779521f448f74b69157b811fb7e497b8850e0388c4cbe09fc9",
+          "after": "a0facc92811f48779521f448f74b69157b811fb7e497b8850e0388c4cbe09fc9"
+        },
+        "tutorials/frameworks-with-rasa/agno/tests/test_unusable_advice.py": {
+          "before": "84bd3346717711b13e825799e687b6994d495380244ed722d45db12806cdbe1c",
+          "after": "84bd3346717711b13e825799e687b6994d495380244ed722d45db12806cdbe1c"
+        },
+        "tutorials/frameworks-with-rasa/agno-mantle/.env.example": {
+          "before": "ee6ecee5193b173a48a5569200e843dcdfae00ef9379aed609a42b4b11004fdb",
+          "after": "ee6ecee5193b173a48a5569200e843dcdfae00ef9379aed609a42b4b11004fdb"
+        },
+        "tutorials/frameworks-with-rasa/agno-mantle/.gitignore": {
+          "before": "9cccd0ffb8d979d0ad74f3bc518bc877b9ec5936aa15d0d4ead880c09ecc1793",
+          "after": "9cccd0ffb8d979d0ad74f3bc518bc877b9ec5936aa15d0d4ead880c09ecc1793"
+        },
+        "tutorials/frameworks-with-rasa/agno-mantle/Makefile": {
+          "before": "329536cb37fcda4a8821fb0b6b4ff2ee2581403aacf4ab6fe9eb6eb73cf6b090",
+          "after": "329536cb37fcda4a8821fb0b6b4ff2ee2581403aacf4ab6fe9eb6eb73cf6b090"
+        },
+        "tutorials/frameworks-with-rasa/agno-mantle/agent.yml": {
+          "before": "493b86c59c31fc37ccece90bc63f4438855857e7ccd40c988e3c9471bcf0b1ed",
+          "after": "493b86c59c31fc37ccece90bc63f4438855857e7ccd40c988e3c9471bcf0b1ed"
+        },
+        "tutorials/frameworks-with-rasa/agno-mantle/integrations.yml": {
+          "before": "0308966d5bd45fcef8fc7c4a887c7f3081078b5dfaf31655bed3bca2d9069007",
+          "after": "0308966d5bd45fcef8fc7c4a887c7f3081078b5dfaf31655bed3bca2d9069007"
+        },
+        "tutorials/frameworks-with-rasa/agno-mantle/pyproject.toml": {
+          "before": "f7e2461151662897076c9bd07245a00f7f40db1b53b9ebbd8bd7a7bb6c856fbc",
+          "after": "f7e2461151662897076c9bd07245a00f7f40db1b53b9ebbd8bd7a7bb6c856fbc"
+        },
+        "tutorials/frameworks-with-rasa/agno-mantle/uv.lock": {
+          "before": "bc8ef97de2ab0a7309fb9f04f02feccede472bee6a33f833b617743efab1b6d3",
+          "after": "bc8ef97de2ab0a7309fb9f04f02feccede472bee6a33f833b617743efab1b6d3"
+        },
+        "tutorials/frameworks-with-rasa/agno-mantle/tests/test_mantle_binding.py": {
+          "before": "9ff888e505445c5e2412c5faa8db406acf48348fcf684db425605a757d5acc92",
+          "after": "9ff888e505445c5e2412c5faa8db406acf48348fcf684db425605a757d5acc92"
+        },
+        "tutorials/frameworks-with-rasa/agno-mantle/skills/product_advice/skill.md": {
+          "before": "f0bcf8d405970b1b986dbf281901a947f8bbe2cb140420a899c39795f315905a",
+          "after": "f0bcf8d405970b1b986dbf281901a947f8bbe2cb140420a899c39795f315905a"
+        },
+        "tutorials/frameworks-with-rasa/agno-mantle/skills/product_advice/tools.py": {
+          "before": "63d011127c9f266d793d653f8eec4dc5d2975499e259ae34f25c1f8391b69224",
+          "after": "63d011127c9f266d793d653f8eec4dc5d2975499e259ae34f25c1f8391b69224"
+        }
+      },
+      "new_native_or_provider_runs": 0
+    }
+  ]
 }
