@@ -145,6 +145,32 @@ class SelectionControls(unittest.TestCase):
         # This fixture passes wire/permission checks and deliberately fails the
         # user's requested account. Selection quality is a separate check.
 
+    def test_active_state_is_rechecked_even_if_revision_was_not_bumped(self):
+        snapshot = self.accounts.snapshot("demo-a")
+        self.accounts.records["A-CURRENT"] = ("demo-a", "current account", False)
+        self.assertEqual(self.accounts.read(snapshot, "A-CURRENT"), {"status": "account_unavailable"})
+        self.assertEqual(self.accounts.reads, [])
+
+    def test_owner_is_rechecked_even_if_revision_was_not_bumped(self):
+        snapshot = self.accounts.snapshot("demo-a")
+        self.accounts.records["A-CURRENT"] = ("demo-b", "current account", True)
+        self.assertEqual(self.accounts.read(snapshot, "A-CURRENT"), {"status": "account_unavailable"})
+        self.assertEqual(self.accounts.reads, [])
+
+    def test_non_json_response_is_unavailable(self):
+        calls = []
+        def reply(request):
+            calls.append(request)
+            return httpx2.Response(200, text="not JSON")
+        result = self.selector(httpx2.MockTransport(reply)).select("demo-a", "Current")
+        self.assertEqual(result, {"status": "decision_unavailable"})
+        self.assertEqual(len(calls), 1)
+
+    def test_malformed_answer_is_unavailable(self):
+        selector, calls = self.altered(lambda b: b["answers"]["account"].update(confidence="not a number"))
+        self.assertEqual(selector.select("demo-a", "Current"), {"status": "decision_unavailable"})
+        self.assertEqual(len(calls), 1)
+
 
 if __name__ == "__main__":
     unittest.main()
