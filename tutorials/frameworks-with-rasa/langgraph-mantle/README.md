@@ -6,7 +6,7 @@ Mantle tools. The model never chooses the worker run ID or account context.
 
 **Author:** Rod Rivera
 **Assessed on:** 2026-10-11
-**Assessed by:** Codex native tools, project validation, licensed training and cold archive load; Architect review pending
+**Assessed by:** Native tool tests, project validation, licensed training and cold archive load
 **Verified with:** Rasa Pro 3.21.0.dev5 native tool bindings and a real separately locked worker; no model conversation or audio qualification
 
 Install only the selected worker and this conversation environment, separately.

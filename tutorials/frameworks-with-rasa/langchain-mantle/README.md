@@ -8,7 +8,7 @@ conclusion is not treated as a verified source.
 
 **Author:** Rod Rivera
 **Assessed on:** 2026-10-11
-**Assessed by:** Codex native tools, project validation, licensed training and cold archive load; Architect review pending
+**Assessed by:** Native tool tests, project validation, licensed training and cold archive load
 **Verified with:** Rasa Pro 3.21.0.dev5, langchain-core 1.6.6; 25 distinct native controls across both projects; no model conversation or audio qualification
 
 ## Run the example

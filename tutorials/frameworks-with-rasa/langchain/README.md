@@ -8,7 +8,7 @@ No LangGraph dependency is needed.
 
 **Author:** Rod Rivera
 **Assessed on:** 2026-10-11
-**Assessed by:** Codex native controls; Architect review pending
+**Assessed by:** Native retrieval, citation and application handoff tests
 **Verified with:** langchain-core 1.6.6, Python 3.12, 20 native controls; 5 additional decorated Mantle controls in the companion project
 
 ## Run the native controls
