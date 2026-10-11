@@ -122,5 +122,46 @@ class MantleBindings(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(self.tools.PROPOSALS, {})
         self.tool_context.send.assert_not_awaited()
 
+    async def test_expiry_cancels_exact_worker_token_and_later_confirm_is_refused(self):
+        await self.tools.select_demo("111111")
+        await self.tools.propose_recent_transactions(context=self.tool_context)
+        key = self.tools.sender()
+        token, owner, _ = self.tools.PROPOSALS[key]
+        body = {"owner": owner, "conversation": key, "token": token}
+        self.tool_context.events.extend([UserUttered("support instead", timestamp=2),
+                                        UserUttered("Yes", timestamp=3)])
+        calls = []
+        native = self.tools.request_worker
+        def record(path, payload):
+            calls.append((path, dict(payload)))
+            return native(path, payload)
+        with patch.object(self.tools, "request_worker", side_effect=record):
+            result = await self.tools.read_confirmed_transactions(context=self.tool_context)
+        self.assertEqual(result.llm_response["status"], "proposal_expired")
+        self.assertEqual(calls, [("/cancel", body)])
+        self.assertNotIn(key, self.tools.PROPOSALS)
+        # Actual HTTP confirmation reaches the same worker with the exact token.
+        self.assertEqual(native("/confirm", body)["status"], "proposal_changed")
+        self.assertEqual(self.accounts.reads, [])
+        self.assertEqual(len(self.requests), 1)
+
+    async def test_lost_cancel_removes_local_copy_but_worker_token_remains(self):
+        await self.tools.select_demo("111111")
+        await self.tools.propose_recent_transactions(context=self.tool_context)
+        key = self.tools.sender()
+        token, owner, _ = self.tools.PROPOSALS[key]
+        self.tool_context.events.extend([UserUttered("support instead", timestamp=2),
+                                        UserUttered("Yes", timestamp=3)])
+        with patch.object(self.tools, "request_worker", return_value={"status": "worker_unavailable"}) as failed:
+            result = await self.tools.read_confirmed_transactions(context=self.tool_context)
+        self.assertEqual(result.llm_response["status"], "proposal_expired")
+        failed.assert_called_once_with("/cancel", {"owner": owner, "conversation": key, "token": token})
+        self.assertNotIn(key, self.tools.PROPOSALS)
+        self.assertEqual(self.accounts.reads, [])
+        # Native worker still holds it. Explicitly cancel it for fixture cleanup.
+        body = {"owner": owner, "conversation": key, "token": token}
+        self.assertEqual(self.tools.request_worker("/cancel", body)["status"], "proposal_cancelled")
+        self.assertEqual(self.tools.request_worker("/confirm", body)["status"], "proposal_changed")
+
 if __name__ == "__main__":
     unittest.main()

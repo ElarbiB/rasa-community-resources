@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "checked_at": "2026-10-11T23:39:13.897613+00:00",
+  "checked_at": "2026-10-11T23:54:53.467430+00:00",
   "versions": {
     "rasa-pro": "3.21.0.dev5",
     "typesafe-sdk": "0.7.4",
     "laya": "0.4.3"
   },
   "source_sha256": {
-    "tutorials/jev-with-rasa/README.md": "20b9f57cd0e255ffe1753a55cb7f7353b8589e81337499e28337c46e247ed1fe",
+    "tutorials/jev-with-rasa/README.md": "566fb310317d4aa31b2e45f095219c23bd21e5ce42f9c47a512a97ea61e421c1",
     "tutorials/jev-with-rasa/local-laya/README.md": "f7dc92b5702d491830f4f4a6ce4ef0347752af78bdc1fbc0851c4ef3cc789753",
     "tutorials/jev-with-rasa/local-laya/model-manifest.json": "e0aa65e0abb674b1b708cf30c041813199e2397af0fd1d8cbfa0bc3a4c8c83f7",
     "tutorials/jev-with-rasa/local-laya/pyproject.toml": "1016ca00ae0be9795980c3ea0fc32cb50b2d6e3149bd6cfdc805b0db0d313558",
@@ -26,7 +26,7 @@
     "tutorials/jev-with-rasa/tests/test_archive.py": "9a3c371fd1d9d48c8d495bc70fbd378f7b971c75b26588d98ea386bbe4d34491",
     "tutorials/jev-with-rasa/tests/test_confirmation_replay.py": "5a730715a9420a93c6fb1ee8ebce97dc64cdf0fe6a5812fcda9f8d07d98ff640",
     "tutorials/jev-with-rasa/tests/test_local_artifacts.py": "5764d02c2f5fdc38ead8d94a2bdcf4e98706cd1d09895984dc3b7e70d8099612",
-    "tutorials/jev-with-rasa/tests/test_mantle_binding.py": "b0a84ebfb475d47018e5ecd1ef9e3b7fbb534363e55ad7e0648f05e41638d101",
+    "tutorials/jev-with-rasa/tests/test_mantle_binding.py": "c96d3bdc9f3aa0d89bd96f8b15dd9208711fbd6a99a5d94b36228064c06b0bf2",
     "tutorials/jev-with-rasa/tests/test_proposals.py": "280f095548f879e93091dec10c697cb81226aae1ae1ce72bfb24810fc40e8184",
     "tutorials/jev-with-rasa/tests/test_selector.py": "75fb3d6f4efc61b0acae0afab5ab6b17176b717423ad0a4243b59b73c1a575bc",
     "tutorials/jev-with-rasa/tests/test_worker_lifecycle.py": "d1518359d5fdc2411591420c947a2a0e59e5807dfac9460f37336f65e8792884",
@@ -42,8 +42,8 @@
     "tutorials/jev-with-rasa/worker/uv.lock": "eb1bceade7c372dd23d77431068773ec8a4deb3ae9e9fc27b40276a4438f15e5"
   },
   "native_controls": {
-    "unique_tests": 47,
-    "passed": 47,
+    "unique_tests": 49,
+    "passed": 49,
     "skipped": 0,
     "command": "python -B -m unittest discover -s tutorials/jev-with-rasa/tests -p test_*.py -v"
   },
@@ -54,7 +54,9 @@
     "model_driven_rest": "demo selection, current-account proposal, later user Yes, fictional transactions at fefcd9f31f483c022cded356bcef1c457007f654",
     "application_owned_artifact_verification": "passed: exactly five pinned paths, local SHA-256 and size checks, offline local-directory load; tampering refused in controls",
     "actual_local_model_with_owned_verifier": "three saved proposal/confirmation/cancellation examples with the verified local directory",
-    "controlled_confirmation_replay": "previous timestamp-only tool at c6eb50a accepts a later Yes after a topic change; next-user-turn check expires it without reading; next-turn positive confirmation still reads"
+    "controlled_confirmation_replay": "previous timestamp-only tool at c6eb50a accepts a later Yes after a topic change; next-user-turn check expires it without reading; next-turn positive confirmation still reads",
+    "worker_cancellation": "real loopback /cancel sends exact saved owner/conversation/token; later /confirm is refused; lost-cancel control proves local removal and retained remote token",
+    "latest_model_driven_rest": "passed at ad5681c53f9e7f130a8837bb2ef7655c71cbbbc9: named account question, next actual user Yes, fictional transaction"
   },
   "evidence_scope": "Fictional tutorial controls and one local-model-backed REST conversation. Not a model accuracy, latency, cost or production benchmark. Hosted Jev remains unqualified; no TypeSafe credential was used. Detailed native/model/writer traces remain local.",
   "reconstruction": "uv locks plus local-laya/model-manifest.json reconstruct the isolated runtimes and one hash-verified English checkpoint."

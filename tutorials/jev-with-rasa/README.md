@@ -109,6 +109,12 @@ must start a new account proposal. Delivery acknowledgement, time-based expiry
 and durable atomic state remain production integration work. Restarting the
 example loses its proposals.
 
+Expiry removes the local proposal even if the worker cancellation request fails.
+The tool reports proposal_expired in that case too. A lost cancel can leave the
+worker's token pending until a new proposal for that conversation replaces it or
+the worker restarts. The Rasa tool has discarded its local token and requires a
+fresh proposal. A real service needs acknowledged, durable cancellation.
+
 ## Optional hosted Jev adapter
 
 Stop `worker-local` with Ctrl-C before switching modes. `make worker` uses
