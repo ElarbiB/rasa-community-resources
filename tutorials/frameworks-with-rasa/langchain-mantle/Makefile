@@ -9,7 +9,7 @@ validate:
 train:
 	$(RASA) train --out models
 run:
-	$(RASA) run --enable-api --port 5017 --model models
+	$(RASA) run --enable-api --port 5017 --interface 127.0.0.1 --model models
 
 test:
 	$(PYTHON) -m unittest discover -s ../langchain/tests -p 'test_*.py'

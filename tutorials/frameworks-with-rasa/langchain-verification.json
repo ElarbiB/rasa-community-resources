@@ -19,7 +19,7 @@
     "tutorials/frameworks-with-rasa/langchain/tests/test_native_retrieval.py": "8ffa6d7e1dbc26b215d584b7810d720c2f59f90ecc17e34e40ec1a5f10992046",
     "tutorials/frameworks-with-rasa/langchain/uv.lock": "df974e53cd42f54caf0970c78df97d4fbab4176aa9fd92a31e08d2e958f04ea2",
     "tutorials/frameworks-with-rasa/langchain-mantle/.env.example": "2891bb20af25754f31f013f813dde020ead10e139ac7c7652e34bd2ab8127d1a",
-    "tutorials/frameworks-with-rasa/langchain-mantle/Makefile": "245df31992380b9cceb574b9a040b9f3485c75075a5faf21b35f93128b92aca6",
+    "tutorials/frameworks-with-rasa/langchain-mantle/Makefile": "6079196657f0fc511c874fe156b8f6459068ad3bc3791cd39f7785ef7966b976",
     "tutorials/frameworks-with-rasa/langchain-mantle/README.md": "5721c40cf687f57557e45e256ae2f95fc444df143bc791c7b2d3223929fb8e88",
     "tutorials/frameworks-with-rasa/langchain-mantle/agent.yml": "040d9fc50a48e994350ce73b2437b8fede12bd4a9ce0409e167b7769e00f0c08",
     "tutorials/frameworks-with-rasa/langchain-mantle/integrations.yml": "0308966d5bd45fcef8fc7c4a887c7f3081078b5dfaf31655bed3bca2d9069007",
