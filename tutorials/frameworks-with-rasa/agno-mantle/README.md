@@ -8,7 +8,11 @@ distinct conversation; the model-facing tool accepts only a question.
 **Author:** Rod Rivera
 **Assessed on:** 2026-10-11
 **Assessed by:** Cedar (Codex)
-**Verified with:** Rasa Pro 3.21.0.dev5, Agno 3.1.2 and Python 3.12.13; 19 native controls, project validation, licensed training and cold archive load passed
+**Verified with:** Rasa Pro 3.21.0.dev5, Agno 3.1.2 and Python 3.12.13. The current
+20 native controls and project validation pass. Licensed training and cold archive
+loading were qualified at `fe5aeb26`; later changes add fixture observations and
+a one-argument mutation control. Application and configuration SHA pairs remain
+unchanged in `../agno-verification.json`.
 
 ## Start only the selected runtime
 

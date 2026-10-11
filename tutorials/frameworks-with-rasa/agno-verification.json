@@ -25,7 +25,7 @@
     "tutorials/frameworks-with-rasa/agno-mantle/.env.example": "ee6ecee5193b173a48a5569200e843dcdfae00ef9379aed609a42b4b11004fdb",
     "tutorials/frameworks-with-rasa/agno-mantle/.gitignore": "9cccd0ffb8d979d0ad74f3bc518bc877b9ec5936aa15d0d4ead880c09ecc1793",
     "tutorials/frameworks-with-rasa/agno-mantle/Makefile": "329536cb37fcda4a8821fb0b6b4ff2ee2581403aacf4ab6fe9eb6eb73cf6b090",
-    "tutorials/frameworks-with-rasa/agno-mantle/README.md": "bce7cce863c6251bd188e73017a30a982d3c64e630a75930436558280e5988aa",
+    "tutorials/frameworks-with-rasa/agno-mantle/README.md": "d3e53c1350c40d13bd9cb05709986f46002667a1f5ca1d4251119cf971f3d983",
     "tutorials/frameworks-with-rasa/agno-mantle/agent.yml": "493b86c59c31fc37ccece90bc63f4438855857e7ccd40c988e3c9471bcf0b1ed",
     "tutorials/frameworks-with-rasa/agno-mantle/integrations.yml": "0308966d5bd45fcef8fc7c4a887c7f3081078b5dfaf31655bed3bca2d9069007",
     "tutorials/frameworks-with-rasa/agno-mantle/pyproject.toml": "f7e2461151662897076c9bd07245a00f7f40db1b53b9ebbd8bd7a7bb6c856fbc",
