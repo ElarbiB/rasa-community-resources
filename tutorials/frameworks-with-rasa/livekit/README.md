@@ -2,7 +2,7 @@
 
 **Author:** Rod Rivera
 **Assessed on:** 2026-10-11
-**Assessed by:** Cedar (Codex)
+**Assessed by:** Native stream, RoomIO, composition and loopback HTTP controls
 **Verified with:** livekit-agents 1.8.6 and Python 3.12.13.
 Twenty-one native stream, RoomIO, composition and loopback HTTP controls pass;
 source and dated qualification hashes are recorded in `../livekit-verification.json`.
