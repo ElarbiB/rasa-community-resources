@@ -20,7 +20,7 @@
     "tutorials/frameworks-with-rasa/pipecat-mantle/uv.lock": "89ece71d535da705d7d3d4701eb23830c7a0b64ef483c42fa8191d6621826131",
     "tutorials/frameworks-with-rasa/pipecat/.gitignore": "c11eebe536a0d75b1b82d262cf37f4d9c6693fb4ab18479b7b7d30bdad84fe6d",
     "tutorials/frameworks-with-rasa/pipecat/Makefile": "891a2516167b0010c4b3cf528db1ce3a35fc7e9a71d49e99018a511c7dc9868d",
-    "tutorials/frameworks-with-rasa/pipecat/README.md": "def76b752566b13f1d823a4c29070763d8baed0aaedfade74c500c0c84b80623",
+    "tutorials/frameworks-with-rasa/pipecat/README.md": "82f4e3ee0775679f0796a1c047bbf48b337875c1756700395d70be62d3020724",
     "tutorials/frameworks-with-rasa/pipecat/demo_interruption.py": "78f8f2208d88fedfeb5240e81121335492a7d2b7e36bcbc4668a7a4411d9c5ef",
     "tutorials/frameworks-with-rasa/pipecat/pyproject.toml": "9506b3a617552afed176c3fd277382200fadc438dd93113354ce636343911843",
     "tutorials/frameworks-with-rasa/pipecat/rasa_dialogue/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -87,5 +87,13 @@
     "tutorials/frameworks-with-rasa/pipecat-mantle/skills/area_status/tools.py": "02c3152a031497b090d147cd8c622c33f8e25d0403ac53f923509def704d63fe",
     "tutorials/frameworks-with-rasa/pipecat-mantle/tests/test_mantle_tool.py": "5c5fb9dd22dde69b50d09e494f95e2fdbf852c31eba6cf5b691e2be90655b59b",
     "tutorials/frameworks-with-rasa/pipecat-mantle/uv.lock": "89ece71d535da705d7d3d4701eb23830c7a0b64ef483c42fa8191d6621826131"
+  },
+  "readme_followup": {
+    "original_qualified_commit": "1716e38a93dd19dc965d6ac8e26c712316f75b8c",
+    "changes": [
+      "Describe single-newline record join as line breaks",
+      "Distinguish selected core text lock from existing bot provider extras"
+    ],
+    "runtime_files_unchanged": true
   }
 }

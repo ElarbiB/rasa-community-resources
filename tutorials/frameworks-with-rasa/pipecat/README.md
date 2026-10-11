@@ -94,6 +94,9 @@ sender. A frame's user text never chooses this client's sender argument.
 ## Insert it into the voice bot you already own
 
 Keep your existing component construction, provider keys and transport hooks.
+The selected core lock qualifies the text adapter. Retain the provider extras
+and versions in your existing voice bot's lock when adding these source files;
+qualify that combined bot against the pinned Pipecat release and your speech services.
 In the bot's asynchronous setup, use the supplied composition function:
 
 ```python
@@ -121,7 +124,7 @@ async with ClientSession() as session:
 `compose.py` retains those media objects once in the native pipeline. It places
 the Rasa dialogue stage between the user aggregator and the existing TTS path.
 Rasa REST replies are buffered until that HTTP response completes. Multiple text
-records are joined with paragraph breaks in one native text frame; this adapter
+records are joined with line breaks in one native text frame; this adapter
 provides complete-message output. Assess time to first speech with your actual
 model and speech services when accepting the voice path.
 
