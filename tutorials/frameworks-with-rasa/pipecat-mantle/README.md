@@ -2,7 +2,7 @@
 
 **Author:** Rod Rivera
 **Assessed on:** 2026-10-11
-**Assessed by:** Cedar (Codex)
+**Assessed by:** Decorated Mantle tool controls, project validation, licensed training and cold archive load
 **Verified with:** pipecat-ai 1.12.0, Rasa Pro 3.21.0.dev5 and Python 3.12.13.
 Seventeen native Pipecat/REST controls and five decorated Mantle controls pass.
 Project validation, licensed training and cold archive loading pass separately;

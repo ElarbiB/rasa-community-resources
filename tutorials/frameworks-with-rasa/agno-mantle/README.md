@@ -7,7 +7,7 @@ distinct conversation; the model-facing tool accepts only a question.
 
 **Author:** Rod Rivera
 **Assessed on:** 2026-10-11
-**Assessed by:** Cedar (Codex)
+**Assessed by:** Native memory-owner controls, decorated Mantle bindings and licensed build qualification
 **Verified with:** Rasa Pro 3.21.0.dev5, Agno 3.1.2 and Python 3.12.13. The current
 20 native controls and project validation pass. Licensed training and cold archive
 loading were qualified at `fe5aeb26`; later changes add fixture observations and
