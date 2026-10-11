@@ -1,26 +1,9 @@
 """Native agent-as-tool context controls with scripted text, not provider evidence."""
-import copy
 import json
 import unittest
 from strands import Agent
-from strands.models.model import Model
 
-class ScriptedTextModel(Model):
-    def __init__(self):
-        self.inputs = []
-    def update_config(self, **kwargs):
-        pass
-    def get_config(self):
-        return {}
-    async def structured_output(self, *args, **kwargs):
-        raise AssertionError("Not used")
-        yield
-    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
-        self.inputs.append(copy.deepcopy(messages))
-        yield {"messageStart": {"role": "assistant"}}
-        yield {"contentBlockDelta": {"contentBlockIndex": 0, "delta": {"text": "Synthetic read-only reply."}}}
-        yield {"contentBlockStop": {"contentBlockIndex": 0}}
-        yield {"messageStop": {"stopReason": "end_turn"}}
+from network_specialist.scripted_model import ScriptedTextModel
 
 class NativeAgentToolContexts(unittest.TestCase):
     def call_pair(self, preserve_context=False):
@@ -44,9 +27,20 @@ class NativeAgentToolContexts(unittest.TestCase):
         self.assertIn("Caller B private fixture", json.dumps(model.inputs[1]))
 
     def test_preserved_context_includes_previous_caller_fixture(self):
-        model, _, _, _ = self.call_pair(preserve_context=True)
+        model, orchestrator, _, _ = self.call_pair(preserve_context=True)
+        self.assertEqual(orchestrator.messages, [])
         self.assertIn("Caller A private fixture", json.dumps(model.inputs[1]))
         self.assertIn("Caller B private fixture", json.dumps(model.inputs[1]))
+
+    def test_history_matrix_keeps_parent_recording_separate_from_specialist_context(self):
+        from network_specialist.context_exercise import inspect_pair
+        for preserve in (False, True):
+            for record in (False, True):
+                with self.subTest(preserve_context=preserve, record_direct_tool_call=record):
+                    result = inspect_pair(preserve, record)
+                    self.assertEqual(result["caller_messages"], 8 if record else 0)
+                    self.assertEqual(result["second_input_includes_A"], preserve)
+                    self.assertTrue(result["second_input_includes_B"])
 
     def test_nonrecording_wrapper_leaves_orchestrator_history_empty(self):
         _, orchestrator, _, _ = self.call_pair()

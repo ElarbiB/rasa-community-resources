@@ -8,7 +8,7 @@ observation. The demo Strands model deliberately refuses generation.
 **Author:** Rod Rivera
 **Assessed on:** 2026-10-11
 **Assessed by:** Native tools, actual Mantle bindings and licensed build qualification
-**Verified with:** strands-agents 1.57.1, Python 3.12, 14 native controls plus three actual Mantle binding controls
+**Verified with:** strands-agents 1.57.1, Python 3.12, 15 native controls plus three actual Mantle binding controls
 
 ## Run the native controls
 
@@ -35,6 +35,19 @@ native controls compare that path with an explicit nonrecording call. Separate
 agent-as-tool controls use a scripted native Model: default context reset omits
 the previous fixture question, while preserve_context=True retains it.
 Those are SDK history controls, not provider accuracy or privacy certification.
+
+Inspect caller messages alongside the specialist's second model input:
+
+```sh
+.venv/bin/python demo_context.py
+```
+
+The matrix crosses direct-call recording with specialist context preservation.
+With preservation enabled and recording disabled, the caller stores zero
+messages while the specialist's second input still includes caller A. These
+synthetic caller labels intentionally share one specialist. Retain context
+within its intended user/task lifetime; an empty parent history does not reset
+that specialist. The replies are scripted and make no provider requests.
 
 `NetworkSession` calls only inspect_network, validates its result and never
 accepts a model-supplied tool name. A wrong-area result, extra action field or

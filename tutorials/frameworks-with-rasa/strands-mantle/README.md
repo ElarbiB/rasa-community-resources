@@ -8,7 +8,7 @@ refuses generation; Mantle still uses its configured conversational model.
 **Author:** Rod Rivera
 **Assessed on:** 2026-10-11
 **Assessed by:** Native tool tests, project validation, licensed training and cold archive load
-**Verified with:** Rasa Pro 3.21.0.dev5, strands-agents 1.57.1; 17 distinct native controls; no model conversation or audio qualification
+**Verified with:** Rasa Pro 3.21.0.dev5, strands-agents 1.57.1; 18 distinct native controls; no model conversation or audio qualification
 
 ## Run the example
 
