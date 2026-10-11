@@ -23,6 +23,7 @@ make test
 ```
 
 The demo passes scripted HTTP replies through the actual TypeSafe SDK. It prints
+an unoffered label accepted by the SDK decoder but refused by the application,
 an accepted read, a refused stale choice and a clarification with no read. The
 scripted confidence is deliberately 1.0. The tests also invoke real decorated
 Mantle tools through a loopback worker. The cold-archive test skips until trained.

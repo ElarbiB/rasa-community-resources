@@ -128,6 +128,23 @@ class SelectionControls(unittest.TestCase):
         self.assertEqual(self.accounts.read(self.accounts.snapshot("demo-a"), "B-CURRENT"),
                          {"status": "choice_not_offered"})
 
+    def test_sdk_type_decoding_does_not_enforce_offered_choice_membership(self):
+        from jacaranda_jev.selector import question
+        selector, _ = self.altered(lambda b: b["answers"]["account"].update(choice="B-CURRENT"))
+        q = question(self.accounts.snapshot("demo-a"))
+        response = selector.client.system_one(model=MODEL, state="Current", questions={"account": q})
+        self.assertEqual(response.choices["account"].choice, "B-CURRENT")
+        self.assertNotIn(response.choices["account"].choice, q.criteria)
+
+    def test_valid_eligible_choice_can_still_be_wrong_for_the_request(self):
+        transport, _ = scripted_transport("A-SAVINGS")
+        result = self.selector(transport).select("demo-a", "Show my current account")
+        self.assertEqual(result["status"], "transactions")
+        self.assertEqual(result["account"], "A-SAVINGS")
+        self.assertEqual(result["decision"]["confidence"], 1.0)
+        # This fixture passes wire/permission checks and deliberately fails the
+        # user's requested account. Selection quality is a separate check.
+
 
 if __name__ == "__main__":
     unittest.main()
