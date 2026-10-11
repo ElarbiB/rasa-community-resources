@@ -83,6 +83,13 @@ async def read_confirmed_transactions(context: ToolContext = None) -> ToolResult
     token, owner, created = proposal
     if user is None or user.timestamp <= created:
         return ToolResult(llm_response={"status": "needs_confirmation"})
+    later_users = [event for event in context.events
+                   if isinstance(event, UserUttered) and event.timestamp > created]
+    if len(later_users) != 1:
+        del PROPOSALS[key]
+        await asyncio.to_thread(request_worker, "/cancel",
+                                {"owner": owner, "conversation": key, "token": token})
+        return ToolResult(llm_response={"status": "proposal_expired"})
     text = (user.text or "").strip().lower().strip(".!?")
     if text in {"no", "no thanks", "cancel"}:
         path = "/cancel"

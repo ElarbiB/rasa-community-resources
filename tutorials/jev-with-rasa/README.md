@@ -27,11 +27,13 @@ that response decoding, offered-choice membership and current eligibility are
 separate checks. These are wire/application controls, not hosted Jev predictions.
 The cold-archive control skips until you run licensed training.
 
-`make demo-confirmation` replays one controlled user event saying Yes, creates a
-new proposal, then tries to consume that same event. The checked tool asks for a
-later reply. Removing only the later-event comparison in an in-memory copy reads
-the fictional account instead. The SDK reply is scripted; this intentionally
-damaged tutorial variant is not a Rasa engine defect or a model behaviour claim.
+`make demo-confirmation` replays a named account question, an unrelated user
+request, another question and a later Yes. The earlier timestamp-only version
+reads fictional account data: the Yes is later, but follows the other question.
+The current next-user-turn check expires that proposal without reading. The
+previous behaviour is reproduced by removing only the new check in memory.
+SDK replies and dialogue events are controlled fixtures; this is an application
+integration defect and fix, not a Rasa engine or model behaviour claim.
 
 The conversation uses a proposal/confirmation path. A proposal reads no
 transactions. A new user reply confirms or cancels it; the model supplies no
@@ -101,10 +103,11 @@ public tool context, and requires a later user event than the one that created
 the proposal. It handles a small explicit yes/no vocabulary. Extend and test that
 vocabulary and the dialogue in the languages you intend to serve.
 
-This small example accepts an explicit yes at any later user turn while that
-proposal is still pending. A production conversation should expire pending
-proposals or bind confirmation to the next user turn and re-ask after unrelated
-input. Restarting the example loses its proposals.
+Confirmation must be the next user turn after the proposal. A later Yes after
+another user turn expires the proposal and cancels its saved token. The user
+must start a new account proposal. Delivery acknowledgement, time-based expiry
+and durable atomic state remain production integration work. Restarting the
+example loses its proposals.
 
 ## Optional hosted Jev adapter
 

@@ -1,16 +1,13 @@
 {
   "schema": 1,
-  "checked_at": "2026-10-11T23:25:02.651584+00:00",
+  "checked_at": "2026-10-11T23:39:13.897613+00:00",
   "versions": {
     "rasa-pro": "3.21.0.dev5",
     "typesafe-sdk": "0.7.4",
     "laya": "0.4.3"
   },
   "source_sha256": {
-    "tutorials/jev-with-rasa/mantle/demo_confirmation.py": "c9e248eac73e2dacd59f418d80078b3888e56e6c60e33d267f73c19a7b686c21",
-    "tutorials/jev-with-rasa/tests/test_confirmation_replay.py": "3bb2a4491457a274b73a9446cfed1235187efa9eaed19b221c0d0930f99b9175",
-    "tutorials/jev-with-rasa/tests/test_local_artifacts.py": "5764d02c2f5fdc38ead8d94a2bdcf4e98706cd1d09895984dc3b7e70d8099612",
-    "tutorials/jev-with-rasa/README.md": "5fc59268305908f12e73029e736092bae17b8f4e62d1f910fc4bafb936021fb9",
+    "tutorials/jev-with-rasa/README.md": "20b9f57cd0e255ffe1753a55cb7f7353b8589e81337499e28337c46e247ed1fe",
     "tutorials/jev-with-rasa/local-laya/README.md": "f7dc92b5702d491830f4f4a6ce4ef0347752af78bdc1fbc0851c4ef3cc789753",
     "tutorials/jev-with-rasa/local-laya/model-manifest.json": "e0aa65e0abb674b1b708cf30c041813199e2397af0fd1d8cbfa0bc3a4c8c83f7",
     "tutorials/jev-with-rasa/local-laya/pyproject.toml": "1016ca00ae0be9795980c3ea0fc32cb50b2d6e3149bd6cfdc805b0db0d313558",
@@ -20,12 +17,15 @@
     "tutorials/jev-with-rasa/mantle/Makefile": "4fd70d4b97ceeec81be4baae1bce1eee5738a8256315cd5c7e01535798fcfe0f",
     "tutorials/jev-with-rasa/mantle/README.md": "7f501b11f7280cb8af5664db9f8e1d0cf3869ba3f48b25ecd78740a34e67dca6",
     "tutorials/jev-with-rasa/mantle/agent.yml": "7b977d9a3abf1d52e3f92df9045f24e6e1b3f4cb0cb0ffa47050624db3fb0d3b",
+    "tutorials/jev-with-rasa/mantle/demo_confirmation.py": "5df7e12513dcc69f2b26d89bbfaeb11540b170d73e2267244aeb1b242258ae0b",
     "tutorials/jev-with-rasa/mantle/integrations.yml": "0308966d5bd45fcef8fc7c4a887c7f3081078b5dfaf31655bed3bca2d9069007",
     "tutorials/jev-with-rasa/mantle/pyproject.toml": "39e63e57841951b4f260ff14bdb8bde25a38322c18ef4bdab39639274549dc53",
-    "tutorials/jev-with-rasa/mantle/skills/recent_transactions/skill.md": "b0a9c2373092813bb091c2f7ce70e2e3bfded61c95b6837053bffb549a80feba",
-    "tutorials/jev-with-rasa/mantle/skills/recent_transactions/tools.py": "9432b0b3ad1f340bb77b8565e3c93642003a20686487355bd1dd17293a4fab74",
+    "tutorials/jev-with-rasa/mantle/skills/recent_transactions/skill.md": "b07d6729c991d043e237d9302c8e38388f6a0eb02ecb3bd6b30bf696e0bf2a46",
+    "tutorials/jev-with-rasa/mantle/skills/recent_transactions/tools.py": "bcb767c7f791e62304700989f359ef92be2de94c1a4714302c9d0f929fbbe662",
     "tutorials/jev-with-rasa/mantle/uv.lock": "3cde43729035e0774238ab422662c845713f359e17d90d372a1a0e7fdff4225f",
     "tutorials/jev-with-rasa/tests/test_archive.py": "9a3c371fd1d9d48c8d495bc70fbd378f7b971c75b26588d98ea386bbe4d34491",
+    "tutorials/jev-with-rasa/tests/test_confirmation_replay.py": "5a730715a9420a93c6fb1ee8ebce97dc64cdf0fe6a5812fcda9f8d07d98ff640",
+    "tutorials/jev-with-rasa/tests/test_local_artifacts.py": "5764d02c2f5fdc38ead8d94a2bdcf4e98706cd1d09895984dc3b7e70d8099612",
     "tutorials/jev-with-rasa/tests/test_mantle_binding.py": "b0a84ebfb475d47018e5ecd1ef9e3b7fbb534363e55ad7e0648f05e41638d101",
     "tutorials/jev-with-rasa/tests/test_proposals.py": "280f095548f879e93091dec10c697cb81226aae1ae1ce72bfb24810fc40e8184",
     "tutorials/jev-with-rasa/tests/test_selector.py": "75fb3d6f4efc61b0acae0afab5ab6b17176b717423ad0a4243b59b73c1a575bc",
@@ -42,8 +42,8 @@
     "tutorials/jev-with-rasa/worker/uv.lock": "eb1bceade7c372dd23d77431068773ec8a4deb3ae9e9fc27b40276a4438f15e5"
   },
   "native_controls": {
-    "unique_tests": 46,
-    "passed": 46,
+    "unique_tests": 47,
+    "passed": 47,
     "skipped": 0,
     "command": "python -B -m unittest discover -s tutorials/jev-with-rasa/tests -p test_*.py -v"
   },
@@ -54,7 +54,7 @@
     "model_driven_rest": "demo selection, current-account proposal, later user Yes, fictional transactions at fefcd9f31f483c022cded356bcef1c457007f654",
     "application_owned_artifact_verification": "passed: exactly five pinned paths, local SHA-256 and size checks, offline local-directory load; tampering refused in controls",
     "actual_local_model_with_owned_verifier": "three saved proposal/confirmation/cancellation examples with the verified local directory",
-    "controlled_confirmation_replay": "same actual UserUttered fixture and scripted SDK choice: checked tool reads nothing; removing only later-event comparison in memory reads fictional A-CURRENT"
+    "controlled_confirmation_replay": "previous timestamp-only tool at c6eb50a accepts a later Yes after a topic change; next-user-turn check expires it without reading; next-turn positive confirmation still reads"
   },
   "evidence_scope": "Fictional tutorial controls and one local-model-backed REST conversation. Not a model accuracy, latency, cost or production benchmark. Hosted Jev remains unqualified; no TypeSafe credential was used. Detailed native/model/writer traces remain local.",
   "reconstruction": "uv locks plus local-laya/model-manifest.json reconstruct the isolated runtimes and one hash-verified English checkpoint."

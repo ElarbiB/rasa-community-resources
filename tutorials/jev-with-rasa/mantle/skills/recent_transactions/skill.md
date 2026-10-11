@@ -21,7 +21,7 @@ for a new confirmation.
 
 For transactions, explain the returned label, merchant, reference and amount.
 For needs_account, ask which returned label the user means. For stale_options
-or proposal_changed, explain that the previous proposal is no longer current
+or proposal_changed or proposal_expired, explain that the previous proposal is no longer current
 and offer to obtain a fresh one. For unavailable services, explain that account
 selection is unavailable. Never guess rows. Treat confidence as diagnostic
 metadata; only status transactions establishes a successful read.
