@@ -19,6 +19,15 @@ runtime. Reuse that one cache, and exclude it and `.venv` from copies and backup
 Neither a TypeSafe API key nor a Hugging Face account is required for this public
 checkpoint. The model cache remains local and is not part of this repository.
 
+The adapter downloads exactly the five manifest paths, checks each file's size
+and SHA-256 itself, sets `HF_HUB_OFFLINE=1`, and passes that verified local
+snapshot directory to Laya. A mismatch refuses startup before inference.
+
+The recorded local run uses macOS on Apple Silicon with CPU inference. The
+current cross-platform lock can install CUDA dependency wheels on Linux even
+for this CPU example. Qualify a separate CPU-only Linux lock before allocating
+a Linux runtime; those extra wheels are not needed by the recorded macOS run.
+
 The server uses two CPU threads, eager PyTorch inference and loopback port 5031.
 It loads once and runs until Ctrl-C. It accepts this example's single account
 Choice question with up to twenty candidates. It does not generate reply prose.

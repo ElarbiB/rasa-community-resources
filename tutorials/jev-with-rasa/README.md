@@ -18,6 +18,7 @@ Use Python 3.12 and uv. From the repository root:
 cd tutorials/jev-with-rasa/mantle
 uv sync --prerelease=allow --locked
 make demo
+make demo-confirmation
 make test
 ```
 
@@ -25,6 +26,12 @@ The demo passes scripted HTTP replies through the actual TypeSafe SDK. It shows
 that response decoding, offered-choice membership and current eligibility are
 separate checks. These are wire/application controls, not hosted Jev predictions.
 The cold-archive control skips until you run licensed training.
+
+`make demo-confirmation` replays one controlled user event saying Yes, creates a
+new proposal, then tries to consume that same event. The checked tool asks for a
+later reply. Removing only the later-event comparison in an in-memory copy reads
+the fictional account instead. The SDK reply is scripted; this intentionally
+damaged tutorial variant is not a Rasa engine defect or a model behaviour claim.
 
 The conversation uses a proposal/confirmation path. A proposal reads no
 transactions. A new user reply confirms or cancels it; the model supplies no
@@ -93,6 +100,11 @@ The confirmation tool checks the latest actual `UserUttered` event through the
 public tool context, and requires a later user event than the one that created
 the proposal. It handles a small explicit yes/no vocabulary. Extend and test that
 vocabulary and the dialogue in the languages you intend to serve.
+
+This small example accepts an explicit yes at any later user turn while that
+proposal is still pending. A production conversation should expire pending
+proposals or bind confirmation to the next user turn and re-ask after unrelated
+input. Restarting the example loses its proposals.
 
 ## Optional hosted Jev adapter
 

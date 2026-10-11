@@ -1,13 +1,15 @@
 PYTHON := .venv/bin/python
 RASA := .venv/bin/rasa
 
-.PHONY: install test demo demo-local worker worker-live worker-local validate train run
+.PHONY: install test demo demo-local demo-confirmation worker worker-live worker-local validate train run
 install:
 	uv sync --prerelease=allow --locked
 test:
 	$(PYTHON) -B -m unittest discover -s ../tests -v
 demo:
 	$(PYTHON) -B -m jacaranda_jev.demo
+demo-confirmation:
+	$(PYTHON) -B demo_confirmation.py
 demo-local:
 	$(PYTHON) -B -m jacaranda_jev.demo_local
 worker:

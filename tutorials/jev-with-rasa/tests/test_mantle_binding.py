@@ -52,6 +52,7 @@ class MantleBindings(unittest.IsolatedAsyncioTestCase):
 
     async def test_tool_does_not_offer_owner_or_account_id(self):
         self.assertEqual(set(inspect.signature(self.tools.propose_recent_transactions).parameters), {"context"})
+        self.assertEqual(set(inspect.signature(self.tools.read_confirmed_transactions).parameters), {"context"})
 
     async def test_unbound_sender_is_refused_before_worker(self):
         result = await self.tools.propose_recent_transactions(context=self.tool_context)

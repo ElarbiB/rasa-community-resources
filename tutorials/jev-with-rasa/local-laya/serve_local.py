@@ -1,5 +1,6 @@
 """A small public-interface Laya server, isolated from the Mantle environment."""
 import argparse
+import hashlib
 import json
 import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -7,6 +8,27 @@ from pathlib import Path
 
 MANIFEST = json.loads(Path(__file__).with_name("model-manifest.json").read_text())
 MODEL_ID = "laya-en@" + MANIFEST["revision"]
+
+
+def verified_snapshot(download, cache_dir, manifest=MANIFEST):
+    """Fetch only manifest paths and check bytes ourselves before model loading."""
+    root = None
+    for relative, expected in manifest["files"].items():
+        file = Path(download(repo_id=manifest["repository"], filename=relative,
+                             revision=manifest["revision"], cache_dir=str(cache_dir), token=False))
+        candidate_root = file.parents[len(Path(relative).parts) - 1]
+        if root is not None and candidate_root != root:
+            raise ValueError("Model artifacts must share one pinned snapshot directory")
+        root = candidate_root
+        digest = hashlib.sha256()
+        with file.open("rb") as stream:
+            for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+                digest.update(chunk)
+        if file.stat().st_size != expected["bytes"] or digest.hexdigest() != expected["sha256"]:
+            raise ValueError(f"Model artifact verification failed: {relative}")
+    if root is None:
+        raise ValueError("Model manifest is empty")
+    return root
 
 
 def make_handler(agent):
@@ -26,7 +48,9 @@ def make_handler(agent):
                 if not isinstance(questions, dict) or set(questions) != {"account"}:
                     raise ValueError()
                 q = questions["account"]
-                if q.get("type") != "choice" or not 1 <= len(q.get("criteria", {})) <= 20:
+                if not isinstance(q, dict) or not isinstance(q.get("criteria"), dict):
+                    raise ValueError()
+                if q.get("type") != "choice" or not 1 <= len(q["criteria"]) <= 20:
                     raise ValueError()
                 result = agent.predict(body["state"], questions)
                 reply = {"model": MODEL_ID, "answers": result["answers"], "usage": result["usage"]}
@@ -58,12 +82,13 @@ def main():
     os.environ["HF_XET_CACHE"] = str(args.cache_dir.resolve() / "xet")
     os.environ["HF_XET_CHUNK_CACHE_SIZE_BYTES"] = "0"
     os.environ["USE_TF"] = "0"
+    from huggingface_hub import hf_hub_download
+    snapshot = verified_snapshot(hf_hub_download, args.cache_dir.resolve())
+    os.environ["HF_HUB_OFFLINE"] = "1"
     import torch
     import laya
     torch.set_num_threads(2)
-    agent = laya.load(MANIFEST["repository"], revision=MANIFEST["revision"],
-                      expected_sha256={p: f["sha256"] for p, f in MANIFEST["files"].items()},
-                      device="cpu", backend="eager")
+    agent = laya.load(str(snapshot), device="cpu", backend="eager")
     with HTTPServer(("127.0.0.1", args.port), make_handler(agent)) as server:
         print("Local Laya ready; model=" + MODEL_ID, flush=True)
         try:
