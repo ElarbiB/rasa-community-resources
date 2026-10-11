@@ -5,7 +5,7 @@ import secrets
 
 TRANSACTIONS = {
     "TX-101": {"owner": "demo-a", "merchant": "ASTER*ANNUAL", "amount": "49.00", "currency": "GBP", "date": "2026-10-06"},
-    "TX-102": {"owner": "demo-a", "merchant": "MAGNOLIA HOTEL", "amount": "149.00", "currency": "GBP", "date": "2026-10-07"},
+    "TX-102": {"owner": "demo-a", "merchant": "LARCHWICK LODGE", "amount": "149.00", "currency": "GBP", "date": "2026-10-07"},
     "TX-201": {"owner": "demo-b", "merchant": "ASTER*ANNUAL", "amount": "49.00", "currency": "GBP", "date": "2026-10-06"},
 }
 

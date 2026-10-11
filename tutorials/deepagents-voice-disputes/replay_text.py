@@ -22,8 +22,8 @@ CASES = {
     "denial": COMMON + ["No, do not record a staff review request."],
     "correction": COMMON + [
         "No. That is the wrong charge. Select TX-102 instead and investigate it; do not record a review.",
-        "Please send TX-102, the 149-pound Magnolia Hotel charge, for staff review.",
-        "Yes, record staff review for that 149-pound Magnolia Hotel charge.",
+        "Please send TX-102, the 149-pound Larchwick Lodge charge, for staff review.",
+        "Yes, record staff review for that 149-pound Larchwick Lodge charge.",
     ],
 }
 
