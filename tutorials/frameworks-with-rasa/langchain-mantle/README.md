@@ -50,17 +50,18 @@ curl -sS http://localhost:5017/webhooks/rest/webhook \
 
 These commands are a reader exercise, not a recorded model run. Record the
 question, selected demo, retrieved source and response. Check that personal
-source P-101 is cited with revision 2026-10-11 and that no replacement is claimed
-to have happened. Use a new sender with business demo 222222 to check B-201.
+source P-101 is cited with revision 2026-10-11 and that the response explains the policy
+without reporting a completed replacement. Use a new sender with business demo 222222 to check B-201.
 The application's sender ID is not proof of customer identity.
 
 ## Boundaries and cleanup
 
 Demo scope is process-local and cannot change within a conversation; it resets
 on restart. A production service needs authorised identity, durable mapping and
-data-access policy. Citation and quotation checks do not prove that an answer
-follows from its evidence. There is no account-action tool in this example.
-The supplied channel is text only; no speech compatibility is claimed.
+data-access policy. Check whether the final answer follows from its evidence, separately from
+citation identity and quotation membership. There is no account-action tool in this example.
+The supplied channel is text only. Test any added speech channel with its actual
+providers before release.
 
 Stop your own running server before retiring the environment from the repository
 root:

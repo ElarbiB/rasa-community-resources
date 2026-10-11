@@ -40,7 +40,7 @@
     "README.md": "64ca4b669d6e68e382953beb45f1243be5db993fe39475f89eaeeb2e8730033e",
     "mantle/.env.example": "ebf4751260b7af1295ece42e789c9fac3f6ae307d0b9b7e443cd1726fdd359a6",
     "mantle/Makefile": "99295391373f6152101761385ce9f967ec52e46a03e151251190dbddd922aafa",
-    "mantle/README.md": "41fb295fe1e31ec3ac31fd02791933c7f543b231790c299cf47fad671958b59b",
+    "mantle/README.md": "a195e7ab370ec39c0799ffd2a13a32a639965218315f6bccd02755aeedccd2b5",
     "mantle/agent.yml": "65b0bb90f092c214a7a9b059de48b0724d8b025ee318ef62bf5f0d5c647e32bc",
     "mantle/integrations.yml": "f8ed9ff22ad3b56b7fed9c855a4690fbd2e92faa85c2d0030453d99ddde73d76",
     "mantle/pyproject.toml": "b0adfc62818b97183eae9eb596fc399613775db63d58ad33629862ff72e1420b",
@@ -153,5 +153,16 @@
     "validation": "38 tests ran, 36 passed, two worker-only skips; isolated worker suite six passed. Project validation, licensed training and cold archive load passed.",
     "historical_live_source_revision": "d442cd1ac8d6a763427596aa9d739e10ebef699a",
     "limits": "Renamed fixture qualified offline only. Prior live_worker and live_text observations are retained with original source and dates; no model or speech conversation repeated."
-  }
+  },
+  "documentation_followups": [
+    {
+      "checked_at": "2026-10-11T19:35:57.804478+00:00",
+      "starting_commit": "67eab85a8a0a94e03c910ae1778242dba2fb8f95",
+      "file": "tutorials/deepagents-voice-disputes/mantle/README.md",
+      "before": "41fb295fe1e31ec3ac31fd02791933c7f543b231790c299cf47fad671958b59b",
+      "after": "a195e7ab370ec39c0799ffd2a13a32a639965218315f6bccd02755aeedccd2b5",
+      "change": "State the existing qualification positively; preserve execution dates, source runtime and unqualified acceptance work.",
+      "new_native_or_provider_runs": 0
+    }
+  ]
 }
