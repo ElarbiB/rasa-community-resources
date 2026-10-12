@@ -96,9 +96,10 @@ the repository workspace tool. Do not copy environments into worktrees or
 backups. Retire them after the local experiment finishes; retain unique local
 outputs and dependency manifests. The [migration walkthrough](MIGRATION.md#6-retire-the-old-runtime-and-retain-rollback-evidence) gives the exact owner registration and retirement commands.
 
-Both implementations use OpenAI Responses with the pinned GPT-5.5 snapshot.
-Its Chat Completions endpoint rejects function tools with low reasoning; the
-Deep Agents model therefore sets `use_responses_api=True` explicitly.
+The Deep Agents configuration selects the OpenAI Responses API explicitly with
+`use_responses_api=True`. Mantle uses its native OpenAI integration. Keep the
+model snapshot and reasoning setting pinned when checking your own provider
+account and request path.
 
 
 ## Inspect SQL and compare the answer
