@@ -10,6 +10,8 @@ inventory, native bindings, target-only checks, acceptance, client cutover and
 retirement. To keep Deep Agents as a research tool instead, use the separate
 [bank voice composition example](../deepagents-voice-disputes/README.md).
 
+Read the [Rasa Community tutorial](https://rasa.community/library/guides/move-a-deep-agents-database-chat-to-mantle/) alongside the runnable source. The established route is retained as the migration walkthrough expands.
+
 ## Prepare the public data and check the tool boundary
 
 ```sh
