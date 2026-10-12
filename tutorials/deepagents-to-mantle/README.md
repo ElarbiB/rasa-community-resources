@@ -28,7 +28,7 @@ your own authorisation in a real service.
 
 ```sh
 cd deepagents
-uv sync --locked --python 3.12
+python3 ../../../scripts/workspace.py start . --owner chinook-source-demo
 # Set OPENAI_API_KEY explicitly in this terminal, without saving it in Git.
 uv run --locked python agent.py "Which five billing countries generated the most revenue?"
 ```
@@ -48,7 +48,7 @@ your terminal according to the Rasa installation documentation.
 
 ```sh
 cd ../mantle
-uv sync --locked --python 3.12
+python3 ../../../scripts/workspace.py start . --owner chinook-mantle-demo
 uv run --locked python -c "from pathlib import Path; from rasa.mantle.validation import validate_project; validate_project(Path('.'))"
 uv run --locked rasa train
 uv run --locked rasa run --enable-api --port 5005
@@ -94,7 +94,7 @@ are outside this example. Do not call tool composition subprocess isolation.
 Keep each lock with its project. Create only the environments you use, through
 the repository workspace tool. Do not copy environments into worktrees or
 backups. Retire them after the local experiment finishes; retain unique local
-outputs and dependency manifests.
+outputs and dependency manifests. The [migration walkthrough](MIGRATION.md#6-retire-the-old-runtime-and-retain-rollback-evidence) gives the exact owner registration and retirement commands.
 
 Both implementations use OpenAI Responses with the pinned GPT-5.5 snapshot.
 Its Chat Completions endpoint rejects function tools with low reasoning; the

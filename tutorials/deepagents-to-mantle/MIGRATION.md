@@ -42,7 +42,7 @@ make test
 make audit-target
 make data
 cd mantle
-uv sync --locked --python 3.12
+python3 ../../../scripts/workspace.py start . --owner chinook-mantle-demo
 make validate
 make test
 ```
@@ -80,7 +80,7 @@ curl --fail-with-body http://localhost:5005/webhooks/rest/webhook \
 This makes billed model requests. For the expected answer, run `python3 oracle.py`
 from the tutorial root. Compare returned SQL, rows and final reply. The original
 README explains how to retain native Deep Agents messages and Mantle tracker
-events locally. Do not infer equal prompts or lower costs from shared instructions.
+events locally. Each runtime assembles its own model requests. Capture complete request and usage records when comparing the two.
 
 ## 5. Accept the application, then change your client
 
@@ -103,9 +103,27 @@ database and its dependency locks. It does not need `deepagents/` installed or
 running. A model archive alone is insufficient: the external shared package
 must also be installed. Keep the complete source revision for rollback.
 
-After the old endpoint has no continuing sessions or jobs, retire its own
-managed environment through `scripts/workspace.py retire` with its recorded
-owner. Preserve unique outputs and journals first. Do not remove another owner's
+For a source-side trial, register its environment from the repository root:
+
+```sh
+python3 scripts/workspace.py start tutorials/deepagents-to-mantle/deepagents --owner chinook-source-demo
+```
+
+The tool installs the selected lock and records that owner in the environment.
+Use an unused owner name for your experiment, and use the same name when retiring it.
+An existing unmanaged or differently owned environment requires an audit; the
+workspace tool refuses to adopt it silently.
+
+After the old endpoint has no continuing sessions or jobs, preserve unique
+outputs and journals, then run this from the repository root:
+
+```sh
+python3 scripts/workspace.py retire tutorials/deepagents-to-mantle/deepagents --owner chinook-source-demo --inactive
+```
+
+The target can be retired after your experiment with the same command using
+`mantle` and its recorded `chinook-mantle-demo` owner. Keep its source and locks.
+ Do not remove another owner's
 environment or delete files just because they are ignored. Rollback changes the
 client route for new sessions back to the retained source release; it does not
 merge conversation histories. Do not change real traffic as part of this demo.

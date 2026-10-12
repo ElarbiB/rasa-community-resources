@@ -1,6 +1,7 @@
 .PHONY: install validate train run test
+OWNER ?= chinook-mantle-demo
 install:
-	uv sync --prerelease=allow --locked --python 3.12
+	python3 ../../../scripts/workspace.py start . --owner $(OWNER)
 validate:
 	uv run --locked python -c "from pathlib import Path; from rasa.mantle.validation import validate_project; validate_project(Path('.'))"
 train:
