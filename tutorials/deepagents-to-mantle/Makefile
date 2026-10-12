@@ -5,3 +5,7 @@ test:
 
 data:
 	python3 -B fetch_data.py
+
+.PHONY: audit-target
+audit-target:
+	python3 -B audit_target.py

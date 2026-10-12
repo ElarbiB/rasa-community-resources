@@ -24,6 +24,58 @@ class ColdMantleArchive(unittest.TestCase):
             self.assertEqual(process.returncode, 0, process.stderr)
             self.assertIn("cold archive load: ok", process.stdout)
 
+    def test_target_loads_and_invokes_with_deepagents_imports_blocked(self):
+        from rasa.mantle.model_archive.snapshot import package_model_archive
+        with tempfile.TemporaryDirectory() as temp:
+            result = package_model_archive(str(PROJECT / "agent.yml"), temp, fixed_model_name="mantle-only", validate=True)
+            self.assertEqual(result.code, 0)
+            env = {k: v for k, v in os.environ.items() if not k.endswith("_API_KEY") and k not in {"RASA_PRO_LICENSE", "RASA_LICENSE", "PYTHONPATH"}}
+            env.update(RASA_TELEMETRY_ENABLED="false", LITELLM_LOCAL_MODEL_COST_MAP="True")
+            code = r"""
+import asyncio, importlib.abc, importlib.util, json, os, sqlite3, sys
+from pathlib import Path
+from contextlib import nullcontext, closing
+from types import SimpleNamespace
+class NoDeepAgents(importlib.abc.MetaPathFinder):
+    def find_spec(self, fullname, path=None, target=None):
+        if fullname == "deepagents" or fullname.startswith("deepagents."):
+            raise ModuleNotFoundError("Deep Agents deliberately unavailable")
+assert not any(n == "deepagents" or n.startswith("deepagents.") for n in sys.modules)
+sys.meta_path.insert(0, NoDeepAgents())
+try:
+    import deepagents
+except ModuleNotFoundError as error:
+    assert str(error) == "Deep Agents deliberately unavailable"
+else:
+    raise AssertionError("Import blocker did not run")
+from rasa.core.agent import Agent
+from rasa.core.config.configuration import Configuration
+from rasa.mantle.orchestration.tool_execution.invoker import ToolInvoker
+Configuration.initialise_endpoints(None)
+agent = Agent.load(sys.argv[1])
+path = Path("sample.sqlite")
+with closing(sqlite3.connect(path)) as db:
+    db.execute("CREATE TABLE Example(value INTEGER)")
+    db.commit()
+os.environ["CHINOOK_DATABASE"] = str(path.resolve())
+spec = importlib.util.spec_from_file_location("migration_query_binding", sys.argv[2])
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+async def run():
+    tracker = SimpleNamespace(memory_scope=lambda: ("query_store", "query_store"), recording_write=lambda **kwargs: nullcontext())
+    invoker = ToolInvoker(mcp_runtime=None, tool_timeout=10, verbatim_trigger_evaluator=None)
+    value = json.loads(await invoker.call_tool_func(module.sql_db_query, "sql_db_query", {"query": "SELECT 1 AS one"}, tracker))
+    assert value["status"] == "ok" and value["rows"] == [[1]], value
+    await agent.close()
+asyncio.run(run())
+assert not any(n == "deepagents" or n.startswith("deepagents.") for n in sys.modules)
+print("Mantle-only cold load and native query: ok; Deep Agents imports blocked")
+"""
+            process = subprocess.run([sys.executable, "-B", "-c", code, result.model, str(PROJECT / "skills/query_store/tools.py")], cwd=temp, env=env, capture_output=True, text=True, timeout=90)
+            self.assertEqual(process.returncode, 0, process.stderr)
+            self.assertIn("Mantle-only cold load and native query: ok", process.stdout)
+            print("Mantle-only cold load and native query: ok; Deep Agents imports blocked")
+
     def test_warm_import_does_not_prove_cold_dependency_availability(self):
         from rasa.mantle.model_archive.snapshot import package_model_archive
         with tempfile.TemporaryDirectory() as temp:

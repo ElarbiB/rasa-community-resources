@@ -5,6 +5,11 @@ Chinook public sample database. This is a task migration, not a replacement
 for every Deep Agents feature. No customer-specific data or internal results
 belong here.
 
+For the full replacement sequence, use [the migration walkthrough](MIGRATION.md):
+inventory, native bindings, target-only checks, acceptance, client cutover and
+retirement. To keep Deep Agents as a research tool instead, use the separate
+[bank voice composition example](../deepagents-voice-disputes/README.md).
+
 ## Prepare the public data and check the tool boundary
 
 ```sh
