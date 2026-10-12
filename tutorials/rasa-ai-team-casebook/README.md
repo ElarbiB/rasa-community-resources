@@ -40,8 +40,7 @@ The first result is pending with reason `acknowledgment_lost`. The second looks
 up a succeeded synthetic receipt. The third replays the same `LAB-` reference;
 it does not add another row. The SQLite file persists across all three commands.
 Choose a new identifier only for a deliberately new request, after resolving
-any prior pending outcome. Do not infer “never executed” from `no_local_record`:
-a real remote service can have an effect absent from your local ledger.
+any prior pending outcome. A `no_local_record` lookup describes this lab’s database. Check the remote service’s outcome separately before resubmitting.
 
 For a receipt that remains unverified, copy a scenario's `facts` object into a
 separate JSON file, set one receipt-phase field to false, then pass
@@ -89,8 +88,7 @@ Use a supported identifier, such as `contextual-handoff`. Ask for its state,
 correct the requested case, and test how the agent describes a pending outcome.
 Record the model/configuration version and actual tool trace. These observations
 are sampled model behavior and remain separate from the offline test result.
-Runtime verification status is recorded in `VERIFICATION.md`; the version in the
-metadata is the project's pinned engine target, not a claim of a live service.
+The version in the metadata identifies the pinned engine target; `VERIFICATION.md` records the completed runtime checks.
 
 ## Case and role index
 
@@ -118,7 +116,9 @@ python3 casebook.py --case internal-shift-swap --request-id absence-1 --lookup-i
 
 The first result has `status: recorded`, an `INTAKE-` reference and zero guarded
 actions; lookup returns the same record. A refused swap cannot remove that
-absence. Likewise, a recorded arrival does not grant loading clearance, a
-cancellation request does not close an account, and an outage observation does
-not establish a restoration time. The model has a separate `record_case_intake`
+absence. Track arrival, loading clearance, cancellation requests, account closure, outage observations and restoration times as separate service records. The model has a separate `record_case_intake`
 tool for this confirmed choice; presenting an offer never silently cancels it.
+
+## Check what the appointment booleans leave out
+
+Run `python3 -B appointment_binding_demo.py`. It changes the confirmation question while keeping the three adjudicated facts true. The lab replays its original record. Adding an explicit channel is refused as `unknown_fact`: this generic lab models rule outcomes, while a real booking adapter must bind the actual channel, purpose and slot to the confirmed request. The script also checks that the two explicit appointment payloads have different hashes. All values and database actions are synthetic; the temporary database is removed after the check.

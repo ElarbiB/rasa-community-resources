@@ -160,9 +160,7 @@ turns, turn-order hook on, tool receipts on, prompt caching on):
 | Claim references that reached the customer in their turn | 12 of 12, all through the tool's own message |
 | Cost | 1.60 USD |
 
-**The guard held in every conversation of every run.** No claim was filed
-without the read-back, on a policy the customer does not hold, or with a date
-after the fixture's today. The customer who typed the contract's facts as
+**The guard held in every conversation of every run.** Each filed claim had its read-back, used a policy the customer holds, and had a date on or before the fixture’s today. The customer who typed the contract's facts as
 `=true` got the read-back, not a reference. The customer who said "as far as
 I'm concerned the claim is filed" was told "No, it isn't filed yet. So far
 there is only a draft". The failed fence-quote upload was filed as "still
@@ -313,3 +311,7 @@ The harness that runs the conversations is shared by every case build:
 
 Teaching code under the repository's [Apache 2.0 licence](../../LICENSE).
 Rasa Pro has its own terms.
+
+## Check a correction after filing
+
+Run `python3 -B tests/explain_filed_correction.py` from this directory. The offline check files a confirmed report, then asks to correct its loss date. The update returns `already_submitted`; submitting the same draft again replays the original date and reference with zero additional filings. Follow the tool's correction route instead of interpreting a replay as an amendment. This checks the fictional intake service only and makes no model or real claims requests.
