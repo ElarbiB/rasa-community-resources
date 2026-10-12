@@ -118,3 +118,7 @@ The first result has `status: recorded`, an `INTAKE-` reference and zero guarded
 actions; lookup returns the same record. A refused swap cannot remove that
 absence. Track arrival, loading clearance, cancellation requests, account closure, outage observations and restoration times as separate service records. The model has a separate `record_case_intake`
 tool for this confirmed choice; presenting an offer never silently cancels it.
+
+## Check what the appointment booleans leave out
+
+Run `python3 -B appointment_binding_demo.py`. It changes the confirmation question while keeping the three adjudicated facts true. The lab replays its original record. Adding an explicit channel is refused as `unknown_fact`: this generic lab models rule outcomes, while a real booking adapter must bind the actual channel, purpose and slot to the confirmed request. The script also checks that the two explicit appointment payloads have different hashes. All values and database actions are synthetic; the temporary database is removed after the check.

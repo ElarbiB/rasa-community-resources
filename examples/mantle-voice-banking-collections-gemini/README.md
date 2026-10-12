@@ -436,3 +436,7 @@ The harness is shared by every case build:
 Teaching code under the repository's [Apache 2.0 licence](../../LICENSE).
 Rasa Pro has its own terms. The caller WAVs are AI-generated speech from
 Google's Gemini text-to-speech and Rime, as this README says.
+
+## Check a conversation with missing hardship history
+
+Run `python3 -B tests/explain_history_loss.py` from this directory. The offline check removes the hardship disclosure from visible history and keeps an obsolete staged offer. With the referral record retained, the final write is blocked. Deliberately discarding that record too allows the fixture to record a plan. This is an injected loss of application evidence, not an observed Mantle or model failure. The sample stores `CallState` in process memory; a real service must retain the referral across process restarts and handoffs. Neither the phrase detector nor a shortened conversation is that durable record.

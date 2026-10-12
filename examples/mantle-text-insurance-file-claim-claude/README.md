@@ -311,3 +311,7 @@ The harness that runs the conversations is shared by every case build:
 
 Teaching code under the repository's [Apache 2.0 licence](../../LICENSE).
 Rasa Pro has its own terms.
+
+## Check a correction after filing
+
+Run `python3 -B tests/explain_filed_correction.py` from this directory. The offline check files a confirmed report, then asks to correct its loss date. The update returns `already_submitted`; submitting the same draft again replays the original date and reference with zero additional filings. Follow the tool's correction route instead of interpreting a replay as an amendment. This checks the fictional intake service only and makes no model or real claims requests.
