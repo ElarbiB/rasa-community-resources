@@ -29,5 +29,5 @@ make run
 ```
 
 REST/model-driven acceptance and any optional audio channel are separate checks.
-The currently supplied channel is text only. No speech behaviour or production
-compatibility is claimed.
+The supplied channel is text only. Test speech behavior and production
+compatibility through the real channel before adding users.

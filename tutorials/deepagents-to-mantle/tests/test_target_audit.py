@@ -42,3 +42,43 @@ class TargetAudit(unittest.TestCase):
         (self.root / "mantle/uv.lock").unlink()
         with self.assertRaises(FileNotFoundError):
             module.audit(self.root)
+
+    def test_missing_rasa_package_is_refused(self):
+        (self.root / "mantle/uv.lock").write_text('[[package]]\nname = "chinook-chat-tools"\n')
+        with self.assertRaisesRegex(ValueError, "must retain"):
+            module.audit(self.root)
+
+    def test_missing_shared_package_is_refused(self):
+        (self.root / "mantle/uv.lock").write_text('[[package]]\nname = "rasa-pro"\n')
+        with self.assertRaisesRegex(ValueError, "must retain"):
+            module.audit(self.root)
+
+    def test_each_missing_configuration_is_refused(self):
+        for name in ("agent.yml", "integrations.yml", "skills/query_store/skill.md"):
+            with self.subTest(name=name):
+                path = self.root / "mantle" / name
+                raw = path.read_bytes()
+                path.unlink()
+                try:
+                    with self.assertRaisesRegex(ValueError, "Missing Mantle configuration"):
+                        module.audit(self.root)
+                finally:
+                    path.write_bytes(raw)
+
+    def test_from_import_in_wrapper_is_refused(self):
+        path = self.root / "mantle/skills/query_store/tools.py"
+        path.write_text(path.read_text() + "\nfrom deepagents import create_deep_agent\n")
+        with self.assertRaisesRegex(ValueError, "still imports"):
+            module.audit(self.root)
+
+    def test_deepagents_import_in_shared_library_is_refused(self):
+        path = self.root / "shared/database.py"
+        path.write_text(path.read_text() + "\nimport deepagents\n")
+        with self.assertRaisesRegex(ValueError, "still imports"):
+            module.audit(self.root)
+
+    def test_dotted_deepagents_submodule_import_is_refused(self):
+        path = self.root / "mantle/skills/query_store/tools.py"
+        path.write_text(path.read_text() + "\nimport deepagents.graph\n")
+        with self.assertRaisesRegex(ValueError, "still imports"):
+            module.audit(self.root)
