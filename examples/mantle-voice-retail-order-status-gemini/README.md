@@ -240,8 +240,7 @@ it: in each, the caller's first sentence was a complete question or statement
 Flux ended the turn at the pause, so the agent answered half the question and
 then the rest. Pauses of 360 to 980 ms preceded those splits, while the
 Northgate caller WAVs held pauses up to 960 ms within a turn without a split.
-That points to Flux ending turns on complete sentences rather than on
-silence, but three turns do not establish it.
+Those three turns recorded complete-sentence endings with Flux. Qualify turn endings across the silence patterns your callers use.
 
 **Speech-to-text on the checked tokens.** Order numbers 21/21 after turning
 spoken numbers into digits (Flux wrote every one as words, so 0/21 matched as
