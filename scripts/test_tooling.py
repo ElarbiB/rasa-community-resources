@@ -769,6 +769,24 @@ class TestCliExitCodes(unittest.TestCase):
         self.assertEqual(rc, 2)
 
 
+class TestPublicAssessmentWording(unittest.TestCase):
+    def test_assessor_and_pending_review_are_rejected(self):
+        for assessor in ("Cedar (Codex)", "Codex local validation; Architect review pending"):
+            text = ("Author: Rod\nAssessed on: 2026-10-11\n"
+                    f"**Assessed by:** {assessor}\nVerified with: pinned native controls\n")
+            with mock.patch("pathlib.Path.is_file", return_value=True), \
+                 mock.patch.object(lint_repo, "_read", return_value=text):
+                findings = lint_repo.check_resource_metadata([rasa_projects.Project(Path("examples/demo"))])
+            self.assertTrue(any("qualification checks" in f.message for f in findings), assessor)
+
+    def test_named_native_checks_are_accepted(self):
+        text = ("Author: Rod\nAssessed on: 2026-10-11\n"
+                "Assessed by: Native tool controls and licensed training\nVerified with: pinned runtime\n")
+        with mock.patch("pathlib.Path.is_file", return_value=True), \
+             mock.patch.object(lint_repo, "_read", return_value=text):
+            self.assertEqual(lint_repo.check_resource_metadata([rasa_projects.Project(Path("examples/demo"))]), [])
+
+
 class TestAssessedOnDate(unittest.TestCase):
     """`Assessed on` is timezone-less, so today differs by locale.
 

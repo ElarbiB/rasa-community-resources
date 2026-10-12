@@ -177,6 +177,10 @@ Industries follow the rasa.community casebook.
 
 Tutorials ([catalog](tutorials/README.md)):
 
+- [`tutorials/deepagents-to-mantle`](tutorials/deepagents-to-mantle/): Move a Deep Agents database chat to Mantle
+- [`tutorials/deepagents-voice-disputes`](tutorials/deepagents-voice-disputes/): Investigate a card charge with Mantle voice and Deep Agents
+- [`tutorials/frameworks-with-rasa`](tutorials/frameworks-with-rasa/): Frameworks with Rasa
+- [`tutorials/jev-with-rasa`](tutorials/jev-with-rasa/): A local decision model behind a Rasa account assistant
 - [`tutorials/rasa-ai-team-casebook`](tutorials/rasa-ai-team-casebook/): AI team casebook lab
 - [`tutorials/rasa-card-reissue-tutorial`](tutorials/rasa-card-reissue-tutorial/): Wren — guarding an irreversible action
 - [`tutorials/rasa-document-artifact-tutorial`](tutorials/rasa-document-artifact-tutorial/): The document is derived, never written

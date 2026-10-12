@@ -198,6 +198,7 @@ temp/
 
 # Tutorial output is local; internal results belong in rasa-community.
 /tutorials/**/results/
+/tutorials/jev-with-rasa/local-laya/model-cache/
 /examples/**/case-build/results/
 /docs/internal/
 
