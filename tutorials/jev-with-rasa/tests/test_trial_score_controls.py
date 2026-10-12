@@ -30,6 +30,9 @@ class TrialScoreControls(unittest.TestCase):
         result = score(records)
         self.assertEqual(result['payload_only_decision'], 'REJECT')
         self.assertEqual(result['account_bound_decision'], 'REJECT')
+        current = next(case for case in result['cases'] if case['case'] == 'current')
+        self.assertTrue(current['payload_matches'])
+        self.assertTrue(current['account_bound_matches'])
 
     def test_duplicate_cases_cannot_pad_checks(self):
         records = capture_controls()

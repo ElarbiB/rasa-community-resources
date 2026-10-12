@@ -29,7 +29,7 @@
     "tutorials/jev-with-rasa/tests/test_mantle_binding.py": "c96d3bdc9f3aa0d89bd96f8b15dd9208711fbd6a99a5d94b36228064c06b0bf2",
     "tutorials/jev-with-rasa/tests/test_proposals.py": "280f095548f879e93091dec10c697cb81226aae1ae1ce72bfb24810fc40e8184",
     "tutorials/jev-with-rasa/tests/test_selector.py": "75fb3d6f4efc61b0acae0afab5ab6b17176b717423ad0a4243b59b73c1a575bc",
-    "tutorials/jev-with-rasa/tests/test_trial_score_controls.py": "dc86a2748d8b8a540a7d391858c97c59446dce9ccbe22b691bb766fe6cda574a",
+    "tutorials/jev-with-rasa/tests/test_trial_score_controls.py": "cd6b1274bbf960e77172eae841e93a654d296803e1167d4c9f8c371b3442fec7",
     "tutorials/jev-with-rasa/tests/test_worker_lifecycle.py": "d1518359d5fdc2411591420c947a2a0e59e5807dfac9460f37336f65e8792884",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/__init__.py": "6d365a11d144e51113c279154db849f706c9851093c734e16a4623fb7c444fcd",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/accounts.py": "71fce3afc82a060e1035d68a1b3f8437077e0b8157269e8802c5748bf84c2888",
@@ -63,5 +63,12 @@
     "trial_scoring_counterexample": "Current and savings fixtures share identical transaction payloads. Two exact payload checks approve even the scripted wrong account; binding actual account identity rejects it. Distinguishable fixture data exposes the payload-only limit, correcting actual identity changes acceptance and duplicate cases are refused. Controlled application data only."
   },
   "evidence_scope": "Fictional tutorial controls and one local-model-backed REST conversation. Not a model accuracy, latency, cost or production benchmark. Hosted Jev remains unqualified; no TypeSafe credential was used. Detailed native/model/writer traces remain local.",
-  "reconstruction": "uv locks plus local-laya/model-manifest.json reconstruct the isolated runtimes and one hash-verified English checkpoint."
+  "reconstruction": "uv locks plus local-laya/model-manifest.json reconstruct the isolated runtimes and one hash-verified English checkpoint.",
+  "incremental_validation": {
+    "basis_revision": "1b0b0ff432b11faecba84fea9cb31d6b5d4291be",
+    "unchanged_full_native_controls": 53,
+    "changed_test_file_controls": 4,
+    "passed": 4,
+    "scope": "Test-only assertion confirms the current case still passes when the captured savings payload changes. Runtime and all other tests unchanged; original full qualification and dates retained."
+  }
 }
