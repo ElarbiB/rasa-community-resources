@@ -1,4 +1,4 @@
-"""Keep the public counterexamples runnable in a fresh source checkout."""
+"""Keep the public counterexamples runnable in a repository source."""
 from pathlib import Path
 import subprocess
 import sys
