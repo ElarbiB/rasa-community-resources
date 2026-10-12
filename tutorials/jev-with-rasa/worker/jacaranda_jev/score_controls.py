@@ -1,58 +1,61 @@
-"""Illustrative acceptance rules over five scripted application controls.
+"""Exact payload equality can miss a wrong account when fixtures share rows.
 
-This is a tutorial scoring counterexample, not live model or population data.
+Two scripted application controls; no live model or population score.
 """
-import contextlib
-import io
 import json
-from . import demo
+from typesafe_sdk import RetryPolicy, TypeSafeClient
+from .accounts import Accounts
+from .scripted import scripted_transport
+from .selector import MODEL, Selector
 
-EXPECTED = {
-    'unoffered_wire_choice': ('invalid_decision', []),
-    'current': ('transactions', ['A-CURRENT']),
-    'retired_during_decision': ('stale_options', []),
-    'clarify': ('needs_account', []),
-    'wrong_eligible': ('transactions', ['A-CURRENT']),
-}
+EXPECTED_ACCOUNT = 'A-CURRENT'
+EXPECTED_TRANSACTIONS = [{'reference': 'DEMO-101', 'merchant': 'Aster Reading',
+                          'currency': 'GBP', 'amount': '-42.18'}]
+EXPECTED_CONTROLS = {'current', 'wrong_eligible'}
 
 
 def capture_controls():
-    output = io.StringIO()
-    with contextlib.redirect_stdout(output):
-        demo.main()
-    return [json.loads(line) for line in output.getvalue().splitlines()]
+    records = []
+    for name, choice in [('current', 'A-CURRENT'), ('wrong_eligible', 'A-SAVINGS')]:
+        accounts = Accounts()
+        transport, calls = scripted_transport(choice)
+        with TypeSafeClient(api_key='scripted-local-test', base_url='https://scripted.invalid',
+                            model=MODEL, transport=transport, retry=RetryPolicy(max_retries=0)) as client:
+            result = Selector(client, accounts).select('demo-a', 'Show my current account transactions')
+        records.append({'case': name, 'requested_account': EXPECTED_ACCOUNT,
+                        'actual_account': result['account'], 'status': result['status'],
+                        'transactions': result['transactions'], 'account_reads': list(accounts.reads),
+                        'scripted_sdk_requests': len(calls), 'external_provider_requests': 0})
+    return records
 
 
 def score(records):
-    by_name = {r['control']: r for r in records}
-    if len(records) != len(EXPECTED) or set(by_name) != set(EXPECTED):
-        raise ValueError('Score exactly the five distinct declared controls')
+    if len(records) != 2 or {r['case'] for r in records} != EXPECTED_CONTROLS:
+        raise ValueError('Score exactly the two distinct declared controls')
     cases = []
-    for name, (expected_status, expected_reads) in EXPECTED.items():
-        record = by_name[name]
-        status = record.get('status', record.get('application_status'))
-        cases.append({'case': name, 'expected_status': expected_status,
-                      'expected_reads': expected_reads, 'actual_status': status,
-                      'actual_reads': record['account_reads'],
-                      'conforms': status == expected_status and record['account_reads'] == expected_reads})
-    passed = sum(r['conforms'] for r in cases)
-    # Deliberately inadequate example threshold: it can average away a wrong account.
-    aggregate = passed >= 4
-    required_request = all(r['conforms'] for r in cases if r['case'] in {'current', 'wrong_eligible'})
-    required_refusals = all(r['conforms'] for r in cases if r['case'] not in {'current', 'wrong_eligible'})
-    return {'cases': cases, 'conforming': passed, 'total': len(cases),
-            'illustrative_aggregate_rule': 'APPROVE' if aggregate else 'REJECT',
-            'required_account_gate': 'APPROVE' if required_request else 'REJECT',
-            'required_refusal_gate': 'APPROVE' if required_refusals else 'REJECT',
-            'external_provider_requests': sum(r['external_provider_requests'] for r in records)}
+    for record in records:
+        payload_matches = (record['status'] == 'transactions' and
+                           record['transactions'] == EXPECTED_TRANSACTIONS)
+        identity_matches = (record['actual_account'] == EXPECTED_ACCOUNT and
+                            record['account_reads'] == [EXPECTED_ACCOUNT])
+        cases.append({**record, 'payload_matches': payload_matches,
+                      'account_bound_matches': payload_matches and identity_matches})
+    return {'cases': cases, 'total': len(cases),
+            'payload_matches': sum(r['payload_matches'] for r in cases),
+            'account_bound_matches': sum(r['account_bound_matches'] for r in cases),
+            'payload_only_decision': 'APPROVE' if all(r['payload_matches'] for r in cases) else 'REJECT',
+            'account_bound_decision': 'APPROVE' if all(r['account_bound_matches'] for r in cases) else 'REJECT',
+            'external_provider_requests': sum(r['external_provider_requests'] for r in cases)}
 
 
 def main():
     result = score(capture_controls())
     for case in result['cases']:
-        print(f"{case['case']}: conforms={str(case['conforms']).lower()}; expected_reads={json.dumps(case['expected_reads'])}; actual_reads={json.dumps(case['actual_reads'])}")
-    print(f"controlled_fixture_outcomes: {result['conforming']}/{result['total']}")
-    for key in ['illustrative_aggregate_rule', 'required_account_gate', 'required_refusal_gate', 'external_provider_requests']:
+        print(f"{case['case']}: requested={case['requested_account']}; actual={case['actual_account']}; payload_matches={str(case['payload_matches']).lower()}; account_bound_matches={str(case['account_bound_matches']).lower()}")
+    print('identical_transaction_payloads: ' + str(result['cases'][0]['transactions'] == result['cases'][1]['transactions']).lower())
+    print(f"exact_payload_checks: {result['payload_matches']}/{result['total']}")
+    print(f"account_bound_checks: {result['account_bound_matches']}/{result['total']}")
+    for key in ['payload_only_decision', 'account_bound_decision', 'external_provider_requests']:
         print(f"{key}: {result[key]}")
 
 

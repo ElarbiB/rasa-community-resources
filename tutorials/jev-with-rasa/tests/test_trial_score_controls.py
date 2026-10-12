@@ -1,36 +1,37 @@
-"""Independent expectation labels must change acceptance when an account changes."""
+"""Detect fixture aliasing rather than averaging a wrong read into a threshold."""
 import copy
 import unittest
 from jacaranda_jev.score_controls import capture_controls, score
 
 
 class TrialScoreControls(unittest.TestCase):
-    def test_aggregate_approves_while_required_account_gate_rejects(self):
-        result = score(capture_controls())
-        self.assertEqual(result['conforming'], 4)
-        self.assertEqual(result['total'], 5)
-        self.assertEqual(result['illustrative_aggregate_rule'], 'APPROVE')
-        self.assertEqual(result['required_account_gate'], 'REJECT')
-        self.assertEqual(result['required_refusal_gate'], 'APPROVE')
+    def test_identical_payloads_approve_the_wrong_account(self):
+        records = capture_controls()
+        self.assertEqual(records[0]['transactions'], records[1]['transactions'])
+        self.assertNotEqual(records[0]['actual_account'], records[1]['actual_account'])
+        result = score(records)
+        self.assertEqual(result['payload_matches'], 2)
+        self.assertEqual(result['account_bound_matches'], 1)
+        self.assertEqual(result['payload_only_decision'], 'APPROVE')
+        self.assertEqual(result['account_bound_decision'], 'REJECT')
         self.assertEqual(result['external_provider_requests'], 0)
 
-    def test_fixing_actual_wrong_account_changes_the_decision(self):
+    def test_fixing_actual_account_changes_acceptance(self):
         records = capture_controls()
-        wrong = next(r for r in records if r['control'] == 'wrong_eligible')
-        wrong['selected_account'] = 'A-CURRENT'
+        wrong = next(r for r in records if r['case'] == 'wrong_eligible')
+        wrong['actual_account'] = 'A-CURRENT'
         wrong['account_reads'] = ['A-CURRENT']
-        result = score(records)
-        self.assertEqual(result['conforming'], 5)
-        self.assertEqual(result['required_account_gate'], 'APPROVE')
+        self.assertEqual(score(records)['account_bound_decision'], 'APPROVE')
 
-    def test_corrupting_refusal_is_not_hidden_by_account_success(self):
+    def test_distinguishable_fixture_rows_expose_payload_only_limit(self):
         records = capture_controls()
-        retired = next(r for r in records if r['control'] == 'retired_during_decision')
-        retired['account_reads'] = ['A-CURRENT']
+        wrong = next(r for r in records if r['case'] == 'wrong_eligible')
+        wrong['transactions'][0]['amount'] = '8.50'
         result = score(records)
-        self.assertEqual(result['required_refusal_gate'], 'REJECT')
+        self.assertEqual(result['payload_only_decision'], 'REJECT')
+        self.assertEqual(result['account_bound_decision'], 'REJECT')
 
-    def test_duplicates_cannot_pad_the_denominator(self):
+    def test_duplicate_cases_cannot_pad_checks(self):
         records = capture_controls()
-        with self.assertRaisesRegex(ValueError, 'five distinct'):
-            score(records + [copy.deepcopy(records[1])])
+        with self.assertRaisesRegex(ValueError, 'two distinct'):
+            score([copy.deepcopy(records[0]), copy.deepcopy(records[0])])

@@ -1,14 +1,12 @@
 {
   "schema": 1,
-  "checked_at": "2026-10-12T00:40:32.791890+00:00",
+  "checked_at": "2026-10-12T01:00:12.097072+00:00",
   "versions": {
     "rasa-pro": "3.21.0.dev5",
     "typesafe-sdk": "0.7.4",
     "laya": "0.4.3"
   },
   "source_sha256": {
-    "tutorials/jev-with-rasa/tests/test_trial_score_controls.py": "87b9713d585c3c729134f3ec5ab5a8af1266d6ecb469d635234c49658b40380c",
-    "tutorials/jev-with-rasa/worker/jacaranda_jev/score_controls.py": "45c3b914cd16aa3403d144894d993b5b330fc5db3eae8a66fbe5bd92be5a0961",
     "tutorials/jev-with-rasa/README.md": "566fb310317d4aa31b2e45f095219c23bd21e5ce42f9c47a512a97ea61e421c1",
     "tutorials/jev-with-rasa/local-laya/README.md": "f7dc92b5702d491830f4f4a6ce4ef0347752af78bdc1fbc0851c4ef3cc789753",
     "tutorials/jev-with-rasa/local-laya/model-manifest.json": "e0aa65e0abb674b1b708cf30c041813199e2397af0fd1d8cbfa0bc3a4c8c83f7",
@@ -31,12 +29,14 @@
     "tutorials/jev-with-rasa/tests/test_mantle_binding.py": "c96d3bdc9f3aa0d89bd96f8b15dd9208711fbd6a99a5d94b36228064c06b0bf2",
     "tutorials/jev-with-rasa/tests/test_proposals.py": "280f095548f879e93091dec10c697cb81226aae1ae1ce72bfb24810fc40e8184",
     "tutorials/jev-with-rasa/tests/test_selector.py": "75fb3d6f4efc61b0acae0afab5ab6b17176b717423ad0a4243b59b73c1a575bc",
+    "tutorials/jev-with-rasa/tests/test_trial_score_controls.py": "dc86a2748d8b8a540a7d391858c97c59446dce9ccbe22b691bb766fe6cda574a",
     "tutorials/jev-with-rasa/tests/test_worker_lifecycle.py": "d1518359d5fdc2411591420c947a2a0e59e5807dfac9460f37336f65e8792884",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/__init__.py": "6d365a11d144e51113c279154db849f706c9851093c734e16a4623fb7c444fcd",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/accounts.py": "71fce3afc82a060e1035d68a1b3f8437077e0b8157269e8802c5748bf84c2888",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/demo.py": "5550966ee32aea4323aff3bbce2919107486efc54da46932ceb701ce85154390",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/demo_local.py": "a87bebb6f8d13bb04b0d2ae1c1eb9c04423a5b05eaa4d394f87abc499994d7e5",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/proposals.py": "b491576d809d1aae2648ae42d79873bb92815b15bec99833ce97f40b6efba700",
+    "tutorials/jev-with-rasa/worker/jacaranda_jev/score_controls.py": "e8ca242b29da9be73c436d380af596e17b0d384d6a1aaeb254d055caac602d1d",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/scripted.py": "9c1f9afd4c75ef4965b13f6ba21c340c883ec0e0ee4d3bbcb78632db89363e4c",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/selector.py": "4668e1b0205cf81ded4ba8fbfb31f656247cb5b4e68f9cbda63101aaadab815e",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/server.py": "241fdb5bc22631cc1dacfb95c1a8de04c86b160d6342135dcba2cb8bf47ee364",
@@ -60,7 +60,7 @@
     "worker_cancellation": "real loopback /cancel sends exact saved owner/conversation/token; later /confirm is refused; lost-cancel control proves local removal and retained remote token",
     "latest_model_driven_rest": "passed at ad5681c53f9e7f130a8837bb2ef7655c71cbbbc9: named account question, next actual user Yes, fictional transaction",
     "wrong_eligible_control": "Scripted SDK choice A-SAVINGS for an explicit current-account request passes wire/permission checks in standalone select; full conversation uses proposal and named confirmation instead.",
-    "trial_scoring_counterexample": "Five distinct scripted application controls: four conform to declared expectations; an illustrative aggregate rule approves while a required account-match gate rejects. These are controlled fixtures, not a population or live-model score. Correcting the actual wrong account changes the gate; duplicated cases cannot pad the denominator."
+    "trial_scoring_counterexample": "Current and savings fixtures share identical transaction payloads. Two exact payload checks approve even the scripted wrong account; binding actual account identity rejects it. Distinguishable fixture data exposes the payload-only limit, correcting actual identity changes acceptance and duplicate cases are refused. Controlled application data only."
   },
   "evidence_scope": "Fictional tutorial controls and one local-model-backed REST conversation. Not a model accuracy, latency, cost or production benchmark. Hosted Jev remains unqualified; no TypeSafe credential was used. Detailed native/model/writer traces remain local.",
   "reconstruction": "uv locks plus local-laya/model-manifest.json reconstruct the isolated runtimes and one hash-verified English checkpoint."
