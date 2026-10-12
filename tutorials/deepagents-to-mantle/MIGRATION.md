@@ -103,7 +103,7 @@ database and its dependency locks. It does not need `deepagents/` installed or
 running. A model archive alone is insufficient: the external shared package
 must also be installed. Keep the complete source revision for rollback.
 
-For a source-side trial, register its environment from the repository root:
+If you already followed the README source comparison, its environment is registered; reuse it. Otherwise, register the source environment once, before its first use, from the repository root:
 
 ```sh
 python3 scripts/workspace.py start tutorials/deepagents-to-mantle/deepagents --owner chinook-source-demo
@@ -123,7 +123,7 @@ python3 scripts/workspace.py retire tutorials/deepagents-to-mantle/deepagents --
 
 The target can be retired after your experiment with the same command using
 `mantle` and its recorded `chinook-mantle-demo` owner. Keep its source and locks.
- Do not remove another owner's
+Do not remove another owner's
 environment or delete files just because they are ignored. Rollback changes the
 client route for new sessions back to the retained source release; it does not
 merge conversation histories. Do not change real traffic as part of this demo.

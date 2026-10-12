@@ -76,3 +76,9 @@ class TargetAudit(unittest.TestCase):
         path.write_text(path.read_text() + "\nimport deepagents\n")
         with self.assertRaisesRegex(ValueError, "still imports"):
             module.audit(self.root)
+
+    def test_dotted_deepagents_submodule_import_is_refused(self):
+        path = self.root / "mantle/skills/query_store/tools.py"
+        path.write_text(path.read_text() + "\nimport deepagents.graph\n")
+        with self.assertRaisesRegex(ValueError, "still imports"):
+            module.audit(self.root)
