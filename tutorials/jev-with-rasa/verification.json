@@ -32,7 +32,7 @@
     "tutorials/jev-with-rasa/tests/test_worker_lifecycle.py": "d1518359d5fdc2411591420c947a2a0e59e5807dfac9460f37336f65e8792884",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/__init__.py": "6d365a11d144e51113c279154db849f706c9851093c734e16a4623fb7c444fcd",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/accounts.py": "71fce3afc82a060e1035d68a1b3f8437077e0b8157269e8802c5748bf84c2888",
-    "tutorials/jev-with-rasa/worker/jacaranda_jev/demo.py": "0a9500dad6f57bf2b9d14f5b9c276741ceae8842832c03d2fdbcba06d582a3dc",
+    "tutorials/jev-with-rasa/worker/jacaranda_jev/demo.py": "5550966ee32aea4323aff3bbce2919107486efc54da46932ceb701ce85154390",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/demo_local.py": "a87bebb6f8d13bb04b0d2ae1c1eb9c04423a5b05eaa4d394f87abc499994d7e5",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/proposals.py": "b491576d809d1aae2648ae42d79873bb92815b15bec99833ce97f40b6efba700",
     "tutorials/jev-with-rasa/worker/jacaranda_jev/scripted.py": "9c1f9afd4c75ef4965b13f6ba21c340c883ec0e0ee4d3bbcb78632db89363e4c",
@@ -56,7 +56,8 @@
     "actual_local_model_with_owned_verifier": "three saved proposal/confirmation/cancellation examples with the verified local directory",
     "controlled_confirmation_replay": "previous timestamp-only tool at c6eb50a accepts a later Yes after a topic change; next-user-turn check expires it without reading; next-turn positive confirmation still reads",
     "worker_cancellation": "real loopback /cancel sends exact saved owner/conversation/token; later /confirm is refused; lost-cancel control proves local removal and retained remote token",
-    "latest_model_driven_rest": "passed at ad5681c53f9e7f130a8837bb2ef7655c71cbbbc9: named account question, next actual user Yes, fictional transaction"
+    "latest_model_driven_rest": "passed at ad5681c53f9e7f130a8837bb2ef7655c71cbbbc9: named account question, next actual user Yes, fictional transaction",
+    "wrong_eligible_control": "Scripted SDK choice A-SAVINGS for an explicit current-account request passes wire/permission checks in standalone select; full conversation uses proposal and named confirmation instead."
   },
   "evidence_scope": "Fictional tutorial controls and one local-model-backed REST conversation. Not a model accuracy, latency, cost or production benchmark. Hosted Jev remains unqualified; no TypeSafe credential was used. Detailed native/model/writer traces remain local.",
   "reconstruction": "uv locks plus local-laya/model-manifest.json reconstruct the isolated runtimes and one hash-verified English checkpoint."
