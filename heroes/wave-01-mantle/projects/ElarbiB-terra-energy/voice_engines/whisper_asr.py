@@ -36,8 +36,6 @@ from rasa.core.channels.voice_stream.audio_bytes import (
     RasaAudioBytes,
     CurrentLanguageConfig,
 )
-from rasa.shared.constants import VOICE_LICENSE_SCOPE
-from rasa.shared.utils.common import validate_environment
 
 logger = structlog.get_logger(__name__)
 

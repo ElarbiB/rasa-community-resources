@@ -26,7 +26,8 @@ npm-debug.log*
 # ─────────────────────────────────────────────────────────────
 # Rasa (runtime & modèles entraînés)
 # ─────────────────────────────────────────────────────────────
-models/
+# Ancré à la racine : ne pas masquer backend/models/ (schémas Pydantic)
+/models/
 .rasa/
 integrations.yml.backup
 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from models.schemas import SiteRequest, RegionCompareRequest
+from schemas import SiteRequest, RegionCompareRequest
 from services.site_scorer import full_site_analysis, compare_sites
 
 router = APIRouter(prefix="/api/analysis", tags=["Analysis"])

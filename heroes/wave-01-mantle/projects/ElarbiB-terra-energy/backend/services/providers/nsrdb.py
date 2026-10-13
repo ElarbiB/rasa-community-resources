@@ -28,7 +28,7 @@ class NSRDBProvider(WeatherProvider):
 
     def __init__(self, name: str, config: dict, cache_dir: str, timeout: int = 30):
         super().__init__(name, config, cache_dir, timeout)
-        self.api_key = os.getenv(config.get("api_key_env", "NSRDB_API_KEY"), "")
+        self.api_key = os.getenv(config.get("credential_env", "NSRDB_API_KEY"), "")
         if not self.api_key:
             raise WeatherProviderError("NSRDB_API_KEY not set in environment")
 

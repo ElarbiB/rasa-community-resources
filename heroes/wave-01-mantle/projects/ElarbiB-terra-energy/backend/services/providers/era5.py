@@ -29,7 +29,7 @@ class ERA5Provider(WeatherProvider):
 
     def __init__(self, name: str, config: dict, cache_dir: str, timeout: int = 3600):
         super().__init__(name, config, cache_dir, timeout)
-        self.api_key = os.getenv(config.get("api_key_env", "CDS_API_KEY"), "")
+        self.api_key = os.getenv(config.get("credential_env", "CDS_API_KEY"), "")
         self.cds_url = "https://cds.climate.copernicus.eu/api/v2"
         if not self.api_key:
             raise WeatherProviderError("CDS_API_KEY not set in environment")

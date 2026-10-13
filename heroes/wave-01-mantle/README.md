@@ -49,7 +49,7 @@ No projects have landed yet. This wave is open.
 
 | Project | What it does | Author | Verified with | Assessed on |
 |---|---|---|---|---|
-| [ElarbiB-terra-energy](projects/ElarbiB-terra-energy/) | Solar & wind site potential assessment via NASA POWER data — site analysis, site comparison and data-source health, in a voice + text agent with a FastAPI backend. | Elarbi B | rasa-pro 3.19.0.dev6 | 2026-09-15 |
+| [ElarbiB-terra-energy](projects/ElarbiB-terra-energy/) | Solar & wind site potential assessment via NASA POWER data — site analysis, site comparison and data-source health, in a voice + text Mantle agent with a FastAPI backend. | Elarbi B | rasa-pro 3.20.0.dev6 | 2026-10-13 |
 
 Every project directory under `projects/` must appear in this table — the build
 fails otherwise, because an unlisted project is one nobody can find. Adding a

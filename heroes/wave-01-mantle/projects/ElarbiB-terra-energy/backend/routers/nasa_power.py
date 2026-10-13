@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from models.schemas import SiteRequest
+from schemas import SiteRequest
 from services.nasa_client import fetch_power_data, fetch_solar_data, fetch_wind_data
 
 router = APIRouter(prefix="/api/nasa", tags=["NASA POWER"])
